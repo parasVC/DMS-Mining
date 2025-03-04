@@ -1,0 +1,22 @@
+export interface ReportFieldProps {
+        profit_margin: number,
+        efficiency_ratio: number,
+        minedWaste: number,
+        minedLg: number,
+        minedMg: number,
+        totalOreGrade: number,
+        overallGrade: number,
+        wasteMiningCost: number,
+        totalOreMiningCost: number,
+        totalDrillingCost: number,
+        totalBlastingCost: number,
+        totalLoadHaulCost: number,
+        costPerTon: number,
+        dailyTonsMined: number,
+        totalDrillingLengthMeters: number,
+        explorationCost: number,
+        totalCost: number,
+        totalRevenue: number,
+        operatingBudget: number,
+        last_login:string
+}

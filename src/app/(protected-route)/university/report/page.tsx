@@ -21,7 +21,7 @@ export default async function report({ searchParams }: any) {
     redirect("/auth/login")
   }
   return (
-    <StudentReport />
+    <StudentReport reportData ={res.data} seed_id={seed_id} />
   );
 }
 
