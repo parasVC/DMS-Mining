@@ -2,7 +2,7 @@ import { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { fetchData } from "@/lib/request/fetch-data";
 
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const options: NextAuthConfig = {
     session: {
         strategy: 'jwt',
@@ -18,7 +18,7 @@ export const options: NextAuthConfig = {
                     url: request,
                     method: "POST",
                     body: JSON.parse(payload),
-                });              
+                });
                 if (response?.data) return response.data;
                 return null;
 
@@ -34,7 +34,7 @@ export const options: NextAuthConfig = {
             if (trigger === "update" && params.session) {
                 return { ...token, ...params.session };
             }
-            
+
             if (user) {
                 token.id = user.id
                 token.role_id = user.role_id;

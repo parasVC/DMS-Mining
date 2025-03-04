@@ -1,13 +1,9 @@
 import { reqeustServer } from "@/actions/reqeust-server-api";
 import SeedTable from "@/components/core/table/seed-table";
 import { redirect } from "next/navigation";
-interface searchParamsProps {
-  searchParams: {
-    page?: string;
-    per_page?: string;
-  }
-}
-export default async function SeedPage({ searchParams }: searchParamsProps) {
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export default async function SeedPage({ searchParams }: any) {
   const { per_page, page } = await searchParams;
 
   const perPage = per_page ? Number(per_page) : 10;

@@ -2,6 +2,7 @@
 import { fetchData } from "@/lib/request/fetch-data";
 import { FetcherProps } from "@/lib/request/type";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function reqeustServer({
     url,
     method = "GET",
@@ -11,7 +12,7 @@ export async function reqeustServer({
     headerOptions = {},
 }: FetcherProps) {
     try {
-        
+
         const res = await fetchData({
             url,
             method,
@@ -20,13 +21,13 @@ export async function reqeustServer({
             options,
             headerOptions
         });
-        
+
         return res;
-        
+
     } catch (error: any) {
-        if(error?.status === 401){
+        if (error?.status === 401) {
             return {
-                statusCode : 401
+                statusCode: 401
             }
         }
         throw new Error("Something went wrong");

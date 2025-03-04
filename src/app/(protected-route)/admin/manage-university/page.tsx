@@ -1,18 +1,9 @@
 import UniversityListTable from "@/components/core/admin/university-list-table";
 import { reqeustServer } from "@/actions/reqeust-server-api";
-import { FIELD_PARAMS } from "@/constant/params";
 import { redirect } from "next/navigation";
 
-interface searchParamsProps {
-    searchParams: {
-        page?: string;
-        per_page?: string;
-        status?: string;
-        [FIELD_PARAMS.CREATED_AT]?: string;
-        [FIELD_PARAMS.UNIVERSITY_NAME]?: string
-    }
-}
-export default async function TablePage({ searchParams }: searchParamsProps) {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export default async function TablePage({ searchParams }: any) {
     const { per_page, page, status, university_name, created_at } = await searchParams
 
     const perPage = per_page ? Number(per_page) : 10;

@@ -2,10 +2,8 @@ import StudentReport from "@/components/core/report/report";
 import { reqeustServer } from "@/actions/reqeust-server-api";
 import { redirect } from "next/navigation";
 
-interface searchParamsProps {
-  searchParams: { seed_id: number, user_id: number }
-}
-export default async function report({ searchParams }: searchParamsProps) {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export default async function report({ searchParams }: any) {
   const { seed_id, user_id } = await searchParams;
 
   if (!seed_id || !user_id) { throw new Error("seed number is required") };

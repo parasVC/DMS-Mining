@@ -1,5 +1,3 @@
-import { Island_Moments } from "next/font/google";
-
 export const FIELD_PARAMS = {
   USER_TYPE: "user_type",
   UNIVERSITY_NAME: "university_name",

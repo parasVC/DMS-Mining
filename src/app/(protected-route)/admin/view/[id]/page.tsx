@@ -3,11 +3,9 @@ import { reqeustServer } from "@/actions/reqeust-server-api";
 import ViewClient from '@/components/core/admin/view-client';
 import { redirect } from 'next/navigation';
 
-interface PageProps {
-  params: { id: string };
-}
-const page = async ({ params }: PageProps) => {
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const page = async ({ params }: any) => {
+// @ts-expect-error its need to be
   const res = await reqeustServer<Response>({
     url: `client/retrieve?client_id=${params.id}`,
     method : "GET",

@@ -8,10 +8,6 @@ import React, { useEffect, useState } from 'react'
 import Loader from '../loader/loader';
 import { UserFieldProps } from '@/types/user-field';
 
-
-const reports = [
-    { seed_number: 45, lastLogin: "2025-02-05", profit: "$5,02,580" },
-];
 interface SeedListProps {
     seed_id: number;
     last_login: string;

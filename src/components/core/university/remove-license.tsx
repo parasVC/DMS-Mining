@@ -3,11 +3,11 @@ import Popup from '@/components/core/popup'
 import { Crown, OctagonMinus } from 'lucide-react'
 import { DialogClose } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { UserFieldProps } from '@/types/user-field'
 import { useUniversityActions } from '@/hooks/use-university-action'
 import { FIELD_PARAMS } from '@/constant/params'
 import { TableDataProps } from '@/data/table/table-columns'
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const RemoveLicensePupup = (userData: TableDataProps) => {
     
     const [isOpen, setIsOpen] = React.useState(false)

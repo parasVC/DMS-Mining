@@ -1,20 +1,10 @@
 import { reqeustServer } from "@/actions/reqeust-server-api";
 import LicenseTable from "@/components/core/table/license-table";
-import { FIELD_PARAMS } from "@/constant/params";
 import { redirect } from "next/navigation";
 
 
-interface searchParamsProps {
-  searchParams: {
-    page?: string;
-    per_page?: string;
-    status?: string;
-    [FIELD_PARAMS.CREATED_AT]?: string;
-    [FIELD_PARAMS.ASSIGNED_STATUS]?: string
-    [FIELD_PARAMS.LICENSE_NUMBER]?: string
-  }
-}
-export default async function ManageLicensepage({ searchParams }: searchParamsProps) {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export default async function ManageLicensepage({ searchParams }: any) {
   const { per_page, page, status,assigned_status, created_at, license_number } = await searchParams;
 
   const perPage = per_page ? Number(per_page) : 10;

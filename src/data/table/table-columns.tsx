@@ -1,4 +1,3 @@
-import LicenseHistoryTableAction from "@/components/core/admin/license-history-table-action";
 import UniveristyAableAction from "@/components/core/admin/univeristy-table-action";
 import StudentTableAction from "@/components/core/university/student-table-action";
 import { Badge } from "@/components/ui/badge";

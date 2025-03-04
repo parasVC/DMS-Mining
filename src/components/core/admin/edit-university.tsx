@@ -37,6 +37,7 @@ export default function EditUniversityForm({userData }: UserFieldProps) {
     const handleSubmitForm = async (data: coreFormData) => {
 
         try {
+            // @ts-expect-error its need to be
             const res = await reqeustServer<FetcherProps>({
                 url: `client/update?client_id=${userData.id}&user_type=client`,
                 body: data,

@@ -22,7 +22,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
         <SidebarNavigation roleType={roleType} />
       </SidebarContent>
       <SidebarFooter>
-        <SidebarFooterMenu user={user} roleType={roleType} />
+        <SidebarFooterMenu user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

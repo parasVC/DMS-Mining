@@ -1,5 +1,7 @@
 import { auth } from '@/auth';
 import { FetcherProps } from './type';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const fetchData = async ({
     url,
     method = "GET",
