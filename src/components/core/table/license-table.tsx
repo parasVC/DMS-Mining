@@ -14,6 +14,8 @@ import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu
 import { Badge } from "@/components/ui/badge";
 import { FIELD_PARAMS } from "@/constant/params";
 import { Label } from "@/components/ui/label";
+import { useBreadcrumb } from "@/context/BreadcrumbContext";
+import { useEffect } from "react";
 
 interface DataItem {
     id: number,
@@ -31,6 +33,11 @@ interface TableComponentProps {
 }
 
 export default function LicenseTable({ data = [], page, totalPages }: TableComponentProps) {
+      const { setBreadcrumbs } = useBreadcrumb();
+    
+      useEffect(() => {
+        setBreadcrumbs([{ label: "License", href: "" }]);
+      }, [setBreadcrumbs]);
     const router = useRouter();
     const searchParams = useSearchParams();
     const perPage = searchParams.get("per_page") ? Number(searchParams.get("per_page")) : 10;

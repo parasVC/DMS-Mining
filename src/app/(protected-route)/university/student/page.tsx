@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default async function TablePage({ searchParams }: any) {
-  const { per_page, page, status, student_name, created_at, license_number } = await searchParams;
+  const { per_page, page, status, student_name, created_at, license_number } =
+    await searchParams;
 
   const perPage = per_page ? Number(per_page) : 10;
   const pageVal = page ? Number(page) : 1;
@@ -19,21 +20,22 @@ export default async function TablePage({ searchParams }: any) {
       student_name: student_name ? student_name : "",
       license_number: license_number ? license_number : "",
     },
-    token: true
-  })
+    token: true,
+  });
 
   if (res.status === "fail") throw new Error(res.message);
 
   if (res.statusCode === 401) {
-    redirect("/auth/login")
+    redirect("/auth/login");
   }
 
-  return <StudentsListTable
-    data={res.data.data}
-    page={pageVal}
-    totalPages={res.data.pages}
-    perPage={perPage}
-
-    details={res.data}
-  />;
+  return (
+    <StudentsListTable
+      data={res.data.data}
+      page={pageVal}
+      totalPages={res.data.pages}
+      perPage={perPage}
+      details={res.data}
+    />
+  );
 }
