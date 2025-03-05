@@ -34,7 +34,7 @@ export const sidebarItems = {
         },
         {
           title: "University",
-          path: "/admin/manage-university",
+          path: "/admin/university",
           icon: GraduationCap,
         }
       ],
@@ -64,13 +64,13 @@ export const sidebarItems = {
         },
         {
           title: "Students",
-          path: "/university/manage-student",
+          path: "/university/student",
           icon: Contact,
           isActive: false,
         },
         {
           title: "Licenses",
-          path: "/university/manage-license",
+          path: "/university/license",
           icon: Crown,
           isActive: false,
         },

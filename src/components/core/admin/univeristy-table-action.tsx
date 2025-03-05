@@ -18,11 +18,11 @@ const UniveristyAableAction = ({ id }: { id: number }) => {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <Button onClick={() => router.push(`/admin/view/${id}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><Eye size={16} />
+                <Button onClick={() => router.push(`/admin/university/view/${id}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><Eye size={16} />
                     View
                 </Button>
                 <AssignLicense clientId={id} />
-                <Button onClick={() => router.push(`/admin/license-history?university_id=${id}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><FileClock size={16} />
+                <Button onClick={() => router.push(`/admin/university/license-history?university_id=${id}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><FileClock size={16} />
                     License History
                 </Button>
                 <Dialog>
