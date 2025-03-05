@@ -1,11 +1,22 @@
+'use client';
+
+import { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import EditUniversityForm from "@/components/core/admin/edit-university";
 import { FIELD_PARAMS } from "@/constant/params";
 import { UserFieldProps } from "@/types/user-field";
-
-
+import { useBreadcrumb } from "@/context/BreadcrumbContext";
 
 export default function ViewClient({ userData }: UserFieldProps) {
+        const { setBreadcrumbs } = useBreadcrumb();
+    
+      useEffect(() => {
+        setBreadcrumbs([
+          { label: "University", href: "/admin/university" },
+          { label: `${userData.university_name}`, href: "" },
+        ]);
+      }, [setBreadcrumbs]);
+
     return (
         <Card className="p-6">
             <div className="flex justify-between items-center">

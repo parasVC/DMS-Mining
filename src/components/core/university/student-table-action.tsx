@@ -17,7 +17,7 @@ const StudentTableAction = (userData:TableDataProps) => {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <Button onClick={() => router.push(`/university/view/${userData.id}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><Eye size={16} />
+                <Button onClick={() => router.push(`/university/student/view/${userData.id}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><Eye size={16} />
                     View
                 </Button>
                 <RemoveLicensePupup {...userData} />
