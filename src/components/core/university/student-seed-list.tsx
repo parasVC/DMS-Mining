@@ -21,7 +21,7 @@ const StudentSeedList = ({userData} : UserFieldProps) => {
         
         setIsLoading(true)
         const res = await reqeustServer({
-            url : `seed/selected/fetch?user_id=${userData.id}`,
+            url : `seed/student/selected?user_id=${userData.id}`,
             method : "GET",
             token : true
         })

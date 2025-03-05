@@ -8,7 +8,7 @@ import { FIELD_PARAMS } from '@/constant/params'
 import { TableDataProps } from '@/data/table/table-columns'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const RemoveLicensePupup = (userData: TableDataProps) => {
+const RemoveLicensePupup = (userData: Partial<TableDataProps>) => {
     
     const [isOpen, setIsOpen] = React.useState(false)
     const { assignLicense, removeLicense } = useUniversityActions()
