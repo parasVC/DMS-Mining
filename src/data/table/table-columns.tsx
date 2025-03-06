@@ -31,7 +31,13 @@ export interface TableDataProps {
 
 export const tableColumn = {
     university_list: [
-        { key: FIELD_PARAMS.ROLE_ID, label: "ID" },
+        { key: FIELD_PARAMS.ROLE_ID, label: "ID", render:(props: TableDataProps) => {
+            return (
+                <Link href={`/admin/university/view/${props.id}`} className="underline text-orange-600 font-medium">
+                    {props[FIELD_PARAMS.ROLE_ID]}
+                </Link>
+            )
+        } },
         { key: FIELD_PARAMS.UNIVERSITY_NAME, label: "University Name" },
         { key: FIELD_PARAMS.CREATED_AT, label: "Created Date", format: (value: string) => format(new Date(value), "yyyy-MM-dd") },
         { key: FIELD_PARAMS.TOTAL_STUDENTS, label: "No. of Students" },

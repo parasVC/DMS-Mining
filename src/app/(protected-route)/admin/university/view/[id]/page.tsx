@@ -5,9 +5,9 @@ import { redirect } from 'next/navigation';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const page = async ({ params }: any) => {
-// @ts-expect-error its need to be
-  const res = await reqeustServer<Response>({
-    url: `client/retrieve?client_id=${params.id}`,
+  const {id} = await params;
+  const res = await reqeustServer({
+    url: `client/retrieve?client_id=${id}`,
     method : "GET",
     token: true
   })
