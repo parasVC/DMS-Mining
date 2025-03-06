@@ -16,7 +16,7 @@ const DynamicBreadcumb = () => {
   return (
     <Breadcrumb className="pl-2">
       <BreadcrumbList>
-        {breadcrumbs.map((data: any, index: number) => {
+        {breadcrumbs.map((data, index: number) => {
           const isLast = index === breadcrumbs.length - 1;
           return (
             <React.Fragment key={index}>
