@@ -119,7 +119,7 @@ export default function AddSingleUserForm({
                                 name={FIELD_PARAMS.ROLE_ID}
                                 render={({ field, fieldState }) => (
                                     <FormItem>
-                                        <FormLabel>Role ID</FormLabel>
+                                        <FormLabel>Student ID</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>

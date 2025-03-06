@@ -71,14 +71,14 @@ const StudentProfileDetail = ({ userData }: UserFieldProps) => {
                                 {item.action && <TooltipProvider>
                                     <Tooltip>
                                         <TooltipTrigger asChild>
-                                            <OctagonMinus size={20} className="text-blue-500 cursor-pointer absolute top-3 right-3" onClick={() => setIsOpen(true)} />
+                                            {userData[FIELD_PARAMS.ASSIGN_LICENSE] ? <OctagonMinus size={20} className="text-blue-500 cursor-pointer absolute top-3 right-3" onClick={() => setIsOpen(true)} /> : <Crown size={20} className="text-blue-500 cursor-pointer absolute top-3 right-3" onClick={() => setIsOpen(true)} />}
                                         </TooltipTrigger>
                                         <TooltipContent
                                             side="bottom"
                                             align="center"
                                             className="bg-white text-black-700 text-s shadow-lg p-1 rounded-md border border-white"
                                         >
-                                            Remove Licence
+                                            {userData[FIELD_PARAMS.ASSIGN_LICENSE] ? "Remove Licence" : "Assign Licence"}
                                         </TooltipContent>
                                     </Tooltip>
                                 </TooltipProvider>}

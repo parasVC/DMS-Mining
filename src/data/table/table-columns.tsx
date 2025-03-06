@@ -3,6 +3,7 @@ import StudentTableAction from "@/components/core/university/student-table-actio
 import { Badge } from "@/components/ui/badge";
 import { FIELD_PARAMS } from "@/constant/params";
 import { format } from "date-fns";
+import Link from "next/link";
 import { ReactNode } from "react";
 
 
@@ -80,7 +81,13 @@ export const tableColumn = {
         format?: (value: string) => string;
     }[],
     students_list: [
-        { key: FIELD_PARAMS.ROLE_ID, label: "Role ID" },
+        { key: FIELD_PARAMS.ROLE_ID, label: "Role ID", render:(props: TableDataProps) => {
+            return (
+                <Link href={`/university/student/view/${props.id}`} className="underline text-blue-600 font-medium">
+                    {props[FIELD_PARAMS.ROLE_ID]}
+                </Link>
+            )
+        } },
         { key: FIELD_PARAMS.STUDENT_NAME, label: "Name",render(prop) {
             return `${prop[FIELD_PARAMS.FIRST_NAME]} ${prop[FIELD_PARAMS.LAST_NAME]}`
         }, },
