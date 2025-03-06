@@ -26,7 +26,7 @@ const StudentSeedList = ({userData} : UserFieldProps) => {
             token : true
         })
         setIsLoading(false)
-        if(res.status === "success" && res.data.length > 0) setSeedList(res)
+        if(res.status === "success" && res.data.length > 0) setSeedList(res.data)
     }
     useEffect(() => {
         fetchSeedList()

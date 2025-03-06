@@ -52,6 +52,17 @@ export const coreFormSchema = z.object({
     [FIELD_PARAMS.EXPIRY_DATE]: z.string().min(1, "Expiry Date is required"),
     [FIELD_PARAMS.EMAIL_SENT]: z.boolean(),
     [FIELD_PARAMS.ASSIGN_LICENSE]: z.boolean(),
+    // file: z
+    //     .string()
+    //     .nonempty("A file must be uploaded."),
+    file: z
+    .instanceof(File)
+    .refine((file) => file.type === "application/vnd.ms-excel" || file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", {
+      message: "Only .xls and .xlsx files are allowed",
+    })
+    .refine((file) => file.size <= 5 * 1024 * 1024, {
+      message: "File size must be less than 5MB",
+    }),
 }).partial();
 
 export type coreFormData = z.infer<typeof coreFormSchema>;

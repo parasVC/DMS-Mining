@@ -34,7 +34,7 @@ export default function AddSingleUserForm({
             [FIELD_PARAMS.ROLE_ID]: "",
             [FIELD_PARAMS.ASSIGN_LICENSE]: true,
             [FIELD_PARAMS.EMAIL_SENT] :true,
-        },
+    },
     });
 
     const handleSubmitForm = async (data: coreFormData) => {
@@ -119,7 +119,7 @@ export default function AddSingleUserForm({
                                 name={FIELD_PARAMS.ROLE_ID}
                                 render={({ field, fieldState }) => (
                                     <FormItem>
-                                        <FormLabel>Role ID</FormLabel>
+                                        <FormLabel>Student ID</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>

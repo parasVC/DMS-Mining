@@ -47,7 +47,7 @@ export const tableColumn = {
         {
             key: "actions", label: "Actions", render: (props: TableDataProps) => {
                 return (
-                    <UniveristyAableAction id={props.id} />
+                    <UniveristyAableAction id={props.id} university_name={props[FIELD_PARAMS.UNIVERSITY_NAME]} />
                 )
             }
         }
