@@ -80,7 +80,7 @@ export default function AddSingleUserForm({
         <Popup
             open={isOpen}
             onOpenChange={setIsOpen}
-            trigger={<Button className="p-1" variant={"outline"} onClick={() => setIsOpen(true)}><PlusCircle /><span className="text-sm">Add New</span></Button>}
+            trigger={<Button className="p-3" variant={"outline"} onClick={() => setIsOpen(true)}><PlusCircle /><span className="text-sm">Add New</span></Button>}
             title="Add New Student"
         >
             <div className={cn("flex flex-col gap-6", className)} {...props}>

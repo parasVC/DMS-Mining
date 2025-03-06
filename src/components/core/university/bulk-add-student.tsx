@@ -22,12 +22,12 @@ export default function BulkAddStudentForm() {
         <Popup
             open={isOpen}
             onOpenChange={setIsOpen}
-            trigger={<Button className="p-1" variant={"outline"} onClick={() => setIsOpen(true)}><HardDriveUpload /><span className="text-sm">Bulk Upload</span></Button>}
+            trigger={<Button className="p-3" variant={"outline"} onClick={() => setIsOpen(true)}><HardDriveUpload /><span className="text-sm">Bulk Upload</span></Button>}
             title="Add New Student"
         >
             <div className="max-w-md m-auto space-y-4">
                 {/* Upload Area */}
-                <Card className="border-dashed border-2 flex flex-col gap-7 border-gray-300 gap-3 rounded-lg p-10 text-center">
+                <Card className="border-dashed border-2 flex flex-col gap-7 border-gray-300 rounded-lg p-10 text-center">
                     <Upload className="mx-auto text-gray-500" size={40} />
                     <p className="text-sm mt-2">
                         Drag file here or{" "}

@@ -88,3 +88,15 @@
 .hide-accordion-icon .lucide-chevron-down {
   display: none;
 }
+
+.rdp-caption_label {
+  margin-left: 10px;
+}
+
+.rdp-selected .rdp-day_button {
+  border: 1px solid #000 !important;
+}
+
+.rdp-chevron {
+  fill: #000 !important;
+}

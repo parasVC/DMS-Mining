@@ -77,7 +77,7 @@ export default function CreateUniversityForm({
         <Popup
             open={isOpen}
             onOpenChange={setIsOpen}
-            trigger={<Button className="p-1" variant={"outline"} onClick={() => setIsOpen(true)}><PlusCircle /><span className="text-sm">Add New University</span></Button>}
+            trigger={<Button className="p-3" variant={"outline"} onClick={() => setIsOpen(true)}><PlusCircle /><span className="text-sm">Add New University</span></Button>}
             title="Add new client"
         >
             <div className={cn("flex flex-col gap-6", className)} {...props}>

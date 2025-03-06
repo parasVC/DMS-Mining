@@ -1,10 +1,8 @@
 import React from "react";
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
-
 import "./globals.css";
+import "react-day-picker/dist/style.css";
 import Providers from "@/components/core/provider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -14,14 +12,17 @@ export const metadata: Metadata = {
   description: "App for mining DME",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-        <body className={`${inter.className} min-h-screen`} suppressHydrationWarning>
-      <Providers>
-          {children}
-      </Providers>
-        </body>
+      <body
+        className={`${inter.className} min-h-screen`}
+        suppressHydrationWarning
+      >
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

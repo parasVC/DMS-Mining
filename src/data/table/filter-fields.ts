@@ -38,7 +38,7 @@ export const filterField: FilterFieldType = {
             label : "Status",
             fields: [
                 { defaultValue: "all", label: "All" },
-                { defaultValue: "Active", label: "Active" },
+                { defaultValue: "active", label: "Active" },
                 { defaultValue: "inactive", label: "Not Active" },
             ],
         }],
@@ -53,7 +53,7 @@ export const filterField: FilterFieldType = {
             label : "Status",
             fields: [
                 { defaultValue: "all", label: "All" },
-                { defaultValue: "Active", label: "Active" },
+                { defaultValue: "active", label: "Active" },
                 { defaultValue: "inactive", label: "Not Active" },
             ],
         }],
@@ -72,7 +72,7 @@ export const filterField: FilterFieldType = {
             label : "Status",
             fields: [
                 { defaultValue: "all", label: "All" },
-                { defaultValue: "Active", label: "Active" },
+                { defaultValue: "active", label: "Active" },
                 { defaultValue: "inactive", label: "Not Active" },
             ],
         }],
