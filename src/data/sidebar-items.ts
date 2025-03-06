@@ -1,4 +1,4 @@
-import { LucideIcon, Settings, Contact, Bean, Crown, Home, GraduationCap, Lock } from "lucide-react";
+import { LucideIcon, Settings, Contact, Bean, Crown, GraduationCap, Lock } from "lucide-react";
 
 export interface NavSubItem {
   title: string;
@@ -27,27 +27,10 @@ export const sidebarItems = {
       label: "Overview",
       items: [
         {
-          title: "Dashboard",
-          path: "/admin/dashboard",
-          icon: Home,
-          isActive: true,
-        },
-        {
           title: "University",
           path: "/admin/university",
           icon: GraduationCap,
         }
-      ],
-    },
-    {
-      id: 2,
-      label: "Others",
-      items: [
-        {
-          title: "Settings",
-          path: "/settings",
-          icon: Settings,
-        },
       ],
     }
   ],
@@ -56,12 +39,6 @@ export const sidebarItems = {
       id: 1,
       label: "Overview",
       items: [
-        {
-          title: "Dashboard",
-          path: "/university/dashboard",
-          icon: Home,
-          isActive: true,
-        },
         {
           title: "Students",
           path: "/university/student",
@@ -97,31 +74,6 @@ export const sidebarItems = {
           }
           ]
 
-        },
-      ],
-    }
-  ],
-  student: <NavGroup[]>[
-    {
-      id: 1,
-      label: "Overview",
-      items: [
-        {
-          title: "Dashboard",
-          path: "/student/dashboard",
-          icon: Home,
-          isActive: true,
-        }
-      ],
-    },
-    {
-      id: 2,
-      label: "Others",
-      items: [
-        {
-          title: "Settings",
-          path: "/settings",
-          icon: Settings,
         },
       ],
     }

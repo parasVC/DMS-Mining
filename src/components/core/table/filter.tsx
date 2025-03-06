@@ -28,6 +28,13 @@ const Filter = ({ filterType }: { filterType: string }) => {
   const filters = filterField[filterType as keyof typeof filterField];
   const createdAtValue = searchParams.get(filters.created_at?.key ?? "") ?? "";
 
+  const handleKeyDown = (e: React.KeyboardEvent, key: string) => {
+    if (e.key === "Enter") {
+      const target = e.target as HTMLInputElement;
+      updateFilter(key, target.value);
+    }
+  };
+
   return (
     <div className="flex gap-4 w-full">
       {filters.input &&
@@ -41,6 +48,7 @@ const Filter = ({ filterType }: { filterType: string }) => {
             <Input
               defaultValue={searchParams.get(ele.key ?? "") || ""}
               onBlur={(e) => updateFilter(ele.key, e.target.value)}
+              onKeyDown={(e)=> handleKeyDown(e, ele.key)}
             />
           </div>
         ))}

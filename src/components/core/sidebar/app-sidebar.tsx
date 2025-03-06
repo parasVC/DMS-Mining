@@ -11,7 +11,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
   const session = await auth();
   const roleType = session?.user_type ;
   const user = {
-    name: session?.user?.name,
+    name: `${session.first_name} ${session.last_name ? session.last_name : ""}`,
     email: session?.user?.email,
     avatar: "",
   };

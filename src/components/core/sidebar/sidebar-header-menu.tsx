@@ -2,14 +2,14 @@ import React from 'react'
 import { SidebarHeader } from '@/components/ui/sidebar'
 import { Collapsible,CollapsibleTrigger } from '@/components/ui/collapsible'
 import { SidebarMenuButton } from '@/components/ui/sidebar'
-import { UserCheck } from 'lucide-react'
+import { Axe } from 'lucide-react'
 const SidebarHeaderMenu = () => {
   return (
     <SidebarHeader>
     <Collapsible>
       <CollapsibleTrigger asChild>
         <SidebarMenuButton tooltip={"Home"}>
-          <UserCheck size={50} />
+          <Axe />
           <span>Mining DME</span>
         </SidebarMenuButton>
       </CollapsibleTrigger>

@@ -1,5 +1,5 @@
 import { reqeustServer } from "@/actions/reqeust-server-api";
-import SeedTable from "@/components/core/table/seed-table";
+import SeedListTable from "@/components/core/university/seed-list-table";
 import { redirect } from "next/navigation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -20,5 +20,5 @@ export default async function SeedPage({ searchParams }: any) {
     redirect("/auth/login")
   }
 //set totol pages when it'll get
-  return <SeedTable data={res.data ? res.data : []} page={pageVal} totalPages={1} />;
+  return <SeedListTable data={res.data}  />;
 }

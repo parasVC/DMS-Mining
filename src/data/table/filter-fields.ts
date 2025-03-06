@@ -77,4 +77,22 @@ export const filterField: FilterFieldType = {
             ],
         }],
     },
+    license_list: {
+        input: [
+            { key: FIELD_PARAMS.LICENSE_NUMBER, label : "License Number" },
+        ],
+        created_at: {
+            label: "Created Date",
+            key: FIELD_PARAMS.CREATED_AT,
+        },
+        select: [{
+            key: FIELD_PARAMS.ASSIGNED_STATUS,
+            label : "Assigned Status",
+            fields: [
+                { defaultValue: "all", label: "All" },
+                { defaultValue: "assigned", label: "Assigned" },
+                { defaultValue: "notassigned", label: "Not Assigned" },
+            ],
+        }],
+    },
 };

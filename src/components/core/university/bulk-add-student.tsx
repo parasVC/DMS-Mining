@@ -22,7 +22,8 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 interface Data {
     total_students: number;
     total_assigned_students : number;
-    total_unassigned_students: number
+    total_unassigned_students: number;
+    unassigned_students_link : string
     // Add other properties that you expect to be present in the data object
   }
 export default function BulkAddStudentForm() {
@@ -34,11 +35,12 @@ export default function BulkAddStudentForm() {
         total_students: 0,
         total_assigned_students : 0,
         total_unassigned_students : 0,
+        unassigned_students_link : ""
 
     })
     const form = useForm<coreFormData>({
         resolver: zodResolver(coreFormSchema),
-        defaultValues: { file: undefined, [FIELD_PARAMS.ASSIGN_LICENSE]: true },
+        defaultValues: { file: undefined, [FIELD_PARAMS.ASSIGN_LICENSE]: true }
     });
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,8 +68,10 @@ export default function BulkAddStudentForm() {
                     description: res.message,
                 });
                 form.reset();
+                
                 setData(res.data)
-                if(res.data.unassigned_students_link) {setIsWarningOpen(true)}
+                
+                if(res.data.total_unassigned_students > 0 ) {setIsWarningOpen(true)}
                 setIsOpen(false);
                 router.refresh();
                 return;
@@ -137,6 +141,20 @@ export default function BulkAddStudentForm() {
         }
     }
 
+
+    const downloadUnallocateFile = () => {
+        if (!data.unassigned_students_link) {
+            alert("No file available for download!");
+            return;
+          }
+          const link = document.createElement("a");
+          link.href = data.unassigned_students_link;
+          link.setAttribute("download", "23412.xlsx"); // Change filename if needed
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+    }
+
     return (
         <>
             <Popup
@@ -193,7 +211,7 @@ export default function BulkAddStudentForm() {
                                     <FormItem>
                                         <Alert variant="default" className="flex items-center justify-between p-4 bg-zinc-50">
                                             <div className="flex items-center gap-2">
-                                                <TriangleAlert className="text-[#FFF8E7] size-5" />
+                                                <TriangleAlert className="text-yellow-500 size-5" />
                                                 <AlertDescription>Would you like to Auto assign the license?</AlertDescription>
                                             </div>
                                             <div className="flex gap-2">
@@ -243,7 +261,7 @@ export default function BulkAddStudentForm() {
                             <p>Download the file for unallocated records.</p>
                         </div>
                         {/* <div className="flex justify-start p-1"> */}
-                            <Button variant="ghost" className="flex w-24 p-2 items-center gap-2 text-white bg-[#FFB60B]">
+                            <Button type="button" onClick={()=>downloadUnallocateFile()} variant="ghost" className="flex w-24 p-2 items-center gap-2 text-white bg-[#FFB60B]">
                                 <Download />
                                 Download
                             </Button>

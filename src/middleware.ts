@@ -24,7 +24,6 @@ export async function middleware(req: NextRequest) {
   const dashboardRoutes: Record<string, string> = {
     admin: "/admin/university",
     client: "/university/student",
-    student: "/student/dashboard",
   };
 
   const userDashboard = dashboardRoutes[role] || "/";
@@ -39,7 +38,6 @@ export async function middleware(req: NextRequest) {
   const protectedRoutes: Record<string, string[]> = {
     admin: ["/admin"],
     client: ["/university"],
-    student: ["/student"],
   };
 
   const allowedRoutes = protectedRoutes[role] || [];
@@ -52,5 +50,5 @@ export async function middleware(req: NextRequest) {
 
 // Apply middleware to relevant routes, including `/`
 export const config = {
-  matcher: ["/", "/admin/:path*", "/university/:path*", "/student/:path*"],
+  matcher: ["/", "/admin/:path*", "/university/:path*"],
 };

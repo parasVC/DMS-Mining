@@ -11,7 +11,9 @@ declare module "next-auth" {
       user_type: string;
       contact: string;
       name: string;
-      client_id: number
+      client_id: number;
+      first_name : string;
+      last_name : string
   
     }
   
@@ -26,7 +28,9 @@ declare module "next-auth" {
       user_type: string;
       contact: string;
       name: string;
-      client_id: number
+      client_id: number;
+      first_name : string;
+      last_name : string
     }
   }
   
@@ -43,7 +47,9 @@ declare module "next-auth" {
       user_type: string;
       contact: string;
       name: string;
-      client_id : number
+      client_id : number;
+      first_name : string;
+      last_name : string
     }
   }
   
