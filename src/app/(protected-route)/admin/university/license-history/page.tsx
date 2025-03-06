@@ -5,7 +5,7 @@ import React from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const LicenseHistoryPage = async ({ searchParams }: any) => {
-  const { university_id, page, per_page, created_at, status } =
+  const { university_id, page, per_page, created_at, status, university_name } =
   await searchParams;
   
   if (!university_id) {
@@ -36,7 +36,9 @@ const LicenseHistoryPage = async ({ searchParams }: any) => {
       total={res.data.total}
       totalPages={res.data.pages}
       perPage={perPage}
-      university_id={university_id}   />
+      university_id={university_id}  
+      university_name={university_name}
+       />
   );
 };
 

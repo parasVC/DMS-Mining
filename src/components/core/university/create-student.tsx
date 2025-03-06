@@ -34,7 +34,7 @@ export default function AddSingleUserForm({
             [FIELD_PARAMS.ROLE_ID]: "",
             [FIELD_PARAMS.ASSIGN_LICENSE]: true,
             [FIELD_PARAMS.EMAIL_SENT] :true,
-        },
+    },
     });
 
     const handleSubmitForm = async (data: coreFormData) => {

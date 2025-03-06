@@ -14,15 +14,16 @@ interface TableComponentProps {
     totalPages: number;
     perPage : number;
     university_id : number;
+    university_name : string
 }
 
-export default function LicenseHistoryTable({ data, page, totalPages, perPage, university_id }: TableComponentProps) {
+export default function LicenseHistoryTable({ data, page, totalPages, perPage, university_id ,university_name}: TableComponentProps) {
     const { setBreadcrumbs } = useBreadcrumb();
 
     useEffect(() => {
       setBreadcrumbs([
         { label: "University", href: "/admin/university" },
-        { label: "License History", href: "" },
+        { label: university_name, href: "" },
       ]);
     }, [setBreadcrumbs]);
     return (

@@ -7,7 +7,7 @@ import { Eye, FileClock, MoreHorizontal, Trash } from 'lucide-react'
 import { useAdminActions } from '@/hooks/use-admin-actions'
 import { useRouter } from 'next/navigation'
 
-const UniveristyAableAction = ({ id }: { id: number }) => {
+const UniveristyAableAction = ({ id,university_name }: { id: number ,university_name:string}) => {
     const router = useRouter()
     const { deleteClientAction } = useAdminActions()
     return (
@@ -22,7 +22,7 @@ const UniveristyAableAction = ({ id }: { id: number }) => {
                     View
                 </Button>
                 <AssignLicense clientId={id} />
-                <Button onClick={() => router.push(`/admin/university/license-history?university_id=${id}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><FileClock size={16} />
+                <Button onClick={() => router.push(`/admin/university/license-history?university_id=${id}&university_name=${university_name}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><FileClock size={16} />
                     License History
                 </Button>
                 <Dialog>
