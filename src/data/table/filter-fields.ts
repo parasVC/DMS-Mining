@@ -91,7 +91,7 @@ export const filterField: FilterFieldType = {
             fields: [
                 { defaultValue: "all", label: "All" },
                 { defaultValue: "assigned", label: "Assigned" },
-                { defaultValue: "notassigned", label: "Not Assigned" },
+                { defaultValue: "not_assigned", label: "Not Assigned" },
             ],
         }],
     },

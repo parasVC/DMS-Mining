@@ -123,7 +123,11 @@ export const tableColumn = {
         format?: (value: string) => string;
     }[],
     license_list: [
-        { key: "id", label: "Sr. No" },
+        { key: "id", label: "Sr. No",render: (props: TableDataProps, index : number) => {
+            return (
+               <span>{index+1}</span>
+            )
+        } },
         { key: FIELD_PARAMS.LICENSE_KEY, label: "License Number" },
         {
             key: FIELD_PARAMS.EXPIRY_DATE,

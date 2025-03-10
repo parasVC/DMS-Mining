@@ -13,7 +13,7 @@ export default function ViewClient({ userData }: UserFieldProps) {
       useEffect(() => {
         setBreadcrumbs([
           { label: "University", href: "/admin/university" },
-          { label: `${userData.university_name}`, href: "" },
+          { label: `${userData.university_name}`, href: "#" },
         ]);
       }, [setBreadcrumbs]);
 

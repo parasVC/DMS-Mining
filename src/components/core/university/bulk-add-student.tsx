@@ -25,7 +25,7 @@ interface Data {
     total_unassigned_students: number;
     unassigned_students_link : string
     // Add other properties that you expect to be present in the data object
-  }
+}
 export default function BulkAddStudentForm() {
     const { toast } = useToast()
     const router = useRouter()
@@ -68,9 +68,9 @@ export default function BulkAddStudentForm() {
                     description: res.message,
                 });
                 form.reset();
-                
+
                 setData(res.data)
-                
+
                 if(res.data.total_unassigned_students > 0 ) {setIsWarningOpen(true)}
                 setIsOpen(false);
                 router.refresh();
@@ -107,10 +107,10 @@ export default function BulkAddStudentForm() {
             const res = JSON.parse(response)
 
             if (res.status === "success") {
-                const url = window.URL.createObjectURL(new Blob([res.data.download_link]));
+                const url = res.data.download_link;
                 const link = document.createElement("a");
                 link.href = url;
-                link.setAttribute("download", "sample_students_data.xlsx"); // Set filename
+                link.setAttribute("download", "sample_students_data.xlsx");
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -146,13 +146,16 @@ export default function BulkAddStudentForm() {
         if (!data.unassigned_students_link) {
             alert("No file available for download!");
             return;
-          }
-          const link = document.createElement("a");
-          link.href = data.unassigned_students_link;
-          link.setAttribute("download", "23412.xlsx"); // Change filename if needed
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+        }
+        const link = document.createElement("a");
+        link.href = data.unassigned_students_link;
+        link.setAttribute("download", "23412.xlsx");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     return (
@@ -261,16 +264,16 @@ export default function BulkAddStudentForm() {
                             <p>Download the file for unallocated records.</p>
                         </div>
                         {/* <div className="flex justify-start p-1"> */}
-                            <Button type="button" onClick={()=>downloadUnallocateFile()} variant="ghost" className="flex w-24 p-2 items-center gap-2 text-white bg-[#FFB60B]">
-                                <Download />
-                                Download
-                            </Button>
+                        <Button type="button" onClick={() => downloadUnallocateFile()} variant="ghost" className="flex w-24 p-2 items-center gap-2 text-white bg-[#FFB60B]">
+                            <Download />
+                            Download
+                        </Button>
                         {/* </div> */}
                     </div>
 
 
                     <DialogFooter className="mt-4 flex justify-end gap-2">
-                        <Button  onClick={() => setIsWarningOpen(false)}>Ok</Button>
+                        <Button onClick={() => setIsWarningOpen(false)}>Ok</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

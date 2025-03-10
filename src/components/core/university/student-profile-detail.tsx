@@ -29,7 +29,7 @@ const StudentProfileDetail = ({ userData }: UserFieldProps) => {
     useEffect(() => {
         setBreadcrumbs([
             { label: "Student", href: "/university/student" },
-            { label: `${studentName}`, href: "" },
+            { label: `${studentName}`, href: "#" },
         ]);
     }, [setBreadcrumbs]);
 

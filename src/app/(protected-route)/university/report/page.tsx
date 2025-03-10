@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default async function report({ searchParams }: any) {
-  const { seed_id, user_id } = await searchParams;
+  const { seed_id, user_id, student_name } = await searchParams;
 
   if (!seed_id || !user_id) { throw new Error("seed number is required") };
   const res = await reqeustServer({
@@ -13,7 +13,7 @@ export default async function report({ searchParams }: any) {
     token: true
   })
 
-
+  
   if (res.status === "fail") throw new Error(res.message);
 
 
@@ -21,7 +21,7 @@ export default async function report({ searchParams }: any) {
     redirect("/auth/login")
   }
   return (
-    <StudentReport reportData ={res.data} seed_id={seed_id} />
+    <StudentReport reportData ={res.data} seed_id={seed_id} student_name={student_name} user_id={user_id}/>
   );
 }
 

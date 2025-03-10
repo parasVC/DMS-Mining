@@ -36,14 +36,10 @@ export const options: NextAuthConfig = {
             }
 
             if (user) {
-                token.id = user.id
-                token.role_id = user.role_id;
-                token.session_id = user?.session_id;
-                token.client_id = user?.client_id
-                token.email = user?.email as string;
-                token.name = user?.name
-                token.user_type = user?.user_type;
-                token.contact = user?.contact;
+               return {
+                ...token,
+                ...user
+               }
 
             }
 
@@ -51,15 +47,11 @@ export const options: NextAuthConfig = {
         },
 
         async session({ session, token }: any) {
-            session.user.id = token?.id;
-            session.role_id = token.role_id;
-            session.client_id = token.client_id;
-            session.session_id = token.session_id;
-            session.user.email = token.email;
-            session.user.name = token.name;
-            session.user_type = token.user_type;
-            session.contact = token.contact
-            return session;
+            
+            return {
+                ...session,
+                ...token
+            };
         },
     },
     pages: {

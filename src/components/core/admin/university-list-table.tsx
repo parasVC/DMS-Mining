@@ -22,7 +22,7 @@ export default function UniversityListTable({ data, page, totalPages,perPage }: 
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "University", href: "/admin/university" },
+      { label: "University", href: "#" },
     ]);
   }, [setBreadcrumbs]);
 

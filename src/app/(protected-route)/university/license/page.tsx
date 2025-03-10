@@ -9,20 +9,24 @@ export default async function ManageLicensepage({ searchParams }: any) {
 
   const perPage = per_page ? Number(per_page) : 10;
   const pageVal = page ? Number(page) : 1;
-
-  const res = await reqeustServer({
-    url: `license/list?page=${pageVal}&&per_page=${perPage}`,
-    method: "POST",
-    body: {
-      created_at: created_at ? created_at : "",
-      assigned_status: assigned_status ? assigned_status : "",
-      license_number: license_number ? license_number : "",
-    },
-    token: true
-  })
+  const createdAt = created_at ? created_at : ""
+  const assignedStatus = assigned_status ? assigned_status : ""
+  const licenseNumber = license_number ? license_number : ""
+  let res;
+  try {
+    res = await reqeustServer({
+      url: `license/list?page=${pageVal}&&per_page=${perPage}&created_at=${createdAt}&assigned_status=${assignedStatus}&license_number=${licenseNumber}`,
+      method: "GET",
+      token: true
+    }) 
+  } catch (error) {
+    if (error.status === 401) {
+      redirect("/auth/login");
+    }else{
+      throw new Error(error instanceof Error ? error.message : "Unknown error occurred");
+    }
+  }
   
-  if(res.status === "fail") throw new Error(res.message);
-    
   if (res.statusCode === 401) {
     redirect("/auth/login")
   }

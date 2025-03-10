@@ -1,14 +1,29 @@
-import React from "react";
+'use client'
+import React, { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
 import { ReportFieldProps } from "@/types/report-data";
+import { useBreadcrumb } from "@/context/BreadcrumbContext";
+
 
 interface ReportDataProps {
   reportData: ReportFieldProps;
   seed_id: string;
+  student_name :string;
+  user_id : number;
 }
 
-const StudentReport = ({ reportData, seed_id }: ReportDataProps) => {
+const StudentReport = ({ reportData, seed_id, student_name, user_id }: ReportDataProps) => {
+  
+  
+  const { setBreadcrumbs } = useBreadcrumb();
+  useEffect(() => {
+          setBreadcrumbs([
+              { label: "Student", href: "/university/student" },
+              { label: `${student_name}`, href: `/university/student/view/${user_id}` },
+              { label: "Report", href: "#" },
+          ]);
+      }, [setBreadcrumbs]);
   return (
     <div className="max-w-6xl mx-auto p-6">
       {/* Header */}

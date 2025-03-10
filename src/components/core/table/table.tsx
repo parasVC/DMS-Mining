@@ -20,13 +20,13 @@ const DataTable = ({data,role}:TableProps) => {
             </TableHeader>
             <TableBody>
                 {data.length ? (
-                    data.map((item) => (
-                        <TableRow key={item.id}>
+                    data.map((item,i) => (
+                        <TableRow key={`${item.id}-${i}`}>
                             {columns.map((column) => (
                                 <TableCell key={column.key}>
                                     {column.format ? (column.format(item[column.key] as string)) :
                                         column.customRender ? column.customRender() :
-                                            column.render ? column.render(item) :
+                                            column.render ? column.render(item,i) :
                                                 item[column.key]
                                     }
                                 </TableCell>

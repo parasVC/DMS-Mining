@@ -23,7 +23,7 @@ export default function LicenseHistoryTable({ data, page, totalPages, perPage, u
     useEffect(() => {
       setBreadcrumbs([
         { label: "University", href: "/admin/university" },
-        { label: university_name, href: "" },
+        { label: university_name, href: "#" },
       ]);
     }, [setBreadcrumbs]);
     return (

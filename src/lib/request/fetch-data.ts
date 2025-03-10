@@ -39,20 +39,6 @@ export const fetchData = async ({
         data: body ?? undefined,
     };
 
-    try {
-        const response = await axios(requestConfig);
-        return response.data;
-    } catch (error: any) {
-        // Extract only the required error details to avoid circular JSON errors
-        if (error.response?.status === 401) {
-            return { statusCode: 401 };
-        }
-        
-        throw new Error(
-            JSON.stringify({
-                status: error.response?.status,
-                data: error.response?.data,
-            })
-        );
-    }
+    const response = await axios(requestConfig);
+    return response.data;
 };

@@ -28,7 +28,7 @@ export default function StudentsListTable({
   const { setBreadcrumbs } = useBreadcrumb();
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Student", href: "" }]);
+    setBreadcrumbs([{ label: "Student", href: "#" }]);
   }, [setBreadcrumbs]);
   return (
     <div className="space-y-4">
