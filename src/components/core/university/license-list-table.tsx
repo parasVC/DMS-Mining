@@ -21,7 +21,7 @@ export default function LicenseListTable({
   const { setBreadcrumbs } = useBreadcrumb();
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Student", href: "#" }]);
+    setBreadcrumbs([{ label: "Licenses", href: "#" }]);
   }, [setBreadcrumbs]);
 
 

@@ -23,7 +23,7 @@ export default function LicenseHistoryTable({ data, url,university_id, universit
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "University", href: "/admin/university" },
+      { label: "Universities", href: "/admin/universities" },
       { label: university_name, href: "#" },
     ]);
   }, [setBreadcrumbs]);

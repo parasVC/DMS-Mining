@@ -33,9 +33,9 @@ export interface TableDataProps {
 export const tableColumn = {
     university_list: [
         {
-            key: FIELD_PARAMS.ROLE_ID, label: "ID", render: (props: TableDataProps) => {
+            key: FIELD_PARAMS.ROLE_ID, label: "Univeristy ID", render: (props: TableDataProps) => {
                 return (
-                    <Link href={`/admin/university/view/${props.id}`} className="underline text-orange-600 font-medium">
+                    <Link href={`/admin/universities/view/${props.id}`} className="underline text-primary font-medium">
                         {props[FIELD_PARAMS.ROLE_ID]}
                     </Link>
                 )
@@ -97,9 +97,9 @@ export const tableColumn = {
     }[],
     students_list: [
         {
-            key: FIELD_PARAMS.ROLE_ID, label: "Role ID", render: (props: TableDataProps) => {
+            key: FIELD_PARAMS.ROLE_ID, label: "Student ID", render: (props: TableDataProps) => {
                 return (
-                    <Link href={`/university/student/view/${props.id}`} className="underline text-blue-600 font-medium">
+                    <Link href={`/university/students/view/${props.id}`} className="underline text-primary font-medium">
                         {props[FIELD_PARAMS.ROLE_ID]}
                     </Link>
                 )
@@ -111,7 +111,11 @@ export const tableColumn = {
             },
         },
         { key: FIELD_PARAMS.CREATED_AT, label: "Enrollment Date", format: (value: string) => format(new Date(value), "yyyy-MM-dd") },
-        { key: FIELD_PARAMS.LICENSE_NUMBER, label: "License Number" },
+        { key: FIELD_PARAMS.LICENSE_NUMBER, label: "License Number", render(prop) {
+            return (
+                <span>{prop[FIELD_PARAMS.LICENSE_NUMBER] ? prop[FIELD_PARAMS.LICENSE_NUMBER] : "-"}</span>
+            )
+        }, },
         {
             key: "status", label: "Status", render: (props: TableDataProps) => {
                 return (

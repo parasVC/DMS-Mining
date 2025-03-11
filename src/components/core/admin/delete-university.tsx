@@ -31,7 +31,7 @@ const DeleteUniversityPopup = ({ id }: { id: number }) => {
             open={isOpen}
             onOpenChange={setIsOpen}
             trigger={<Button variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center" onClick={() => setIsOpen(true)}> <Trash size={16} />Delete University</Button>}
-            title="Delete student"
+            title="Delete university"
             footer={<>
                 <Button onClick={() => setIsOpen(false)} variant={"secondary"}>No</Button>
                 <Button type="submit" onClick={() => { handleDelete(id) }} disabled={isLoading}>
@@ -42,7 +42,7 @@ const DeleteUniversityPopup = ({ id }: { id: number }) => {
             }
 
         >
-            Are you sure want to delete this student ?
+            Are you sure want to delete this university ?
         </Popup>
     )
 }

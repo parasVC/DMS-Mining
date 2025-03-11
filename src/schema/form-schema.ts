@@ -8,7 +8,7 @@ export const coreFormSchema = z.object({
         .email({ message: "Invalid email address" }),
     contact: z
         .string()
-        .min(5, { message: "Contact must be at least 5 characters" }) // Ensure at least 5 characters
+        .min(10, { message: "Contact must be at least 10 characters" }) // Ensure at least 5 characters
         .superRefine((val, ctx) => {
             const num = Number(val);
             if (isNaN(num)) {
@@ -25,24 +25,24 @@ export const coreFormSchema = z.object({
         }),
     [FIELD_PARAMS.UNIVERSITY_NAME]: z
         .string()
-        .min(2, { message: "University Name name should have at least 2 characters" }),
+        .min(1, { message: "University name is required" }),
     [FIELD_PARAMS.ROLE_ID]: z
         .string()
-        .min(2, { message: "Role ID should have at least 2 characters" }),
+        .min(1, { message: "University ID is required" }),
 
     [FIELD_PARAMS.FIRST_NAME]: z
         .string()
-        .min(2, { message: "First name should have at least 2 characters" }),
+        .min(1, { message: "Firstname is required" }),
     [FIELD_PARAMS.LAST_NAME]: z
         .string()
-        .min(2, { message: "Last name should have at least 2 characters" }),
+        .min(1, { message: "Lastname is required" }),
     password: z
         .string()
-        .min(2, { message: "Password should have at least 2 characters" })
-        .max(15, { message: "Password should not exceed 15 characters" }),
+        .min(2, { message: "should have at least 2 characters" })
+        .max(15, { message: "should not exceed 15 characters" }),
     address: z
         .string()
-        .min(10, { message: "Address should have at least 10 characters" }),
+        .min(10, { message: "should have at least 10 characters" }),
     [FIELD_PARAMS.NUM_LICENSES]: z
         .string()
         .min(1, "Please enter number of licenses") // Ensure it's not empty

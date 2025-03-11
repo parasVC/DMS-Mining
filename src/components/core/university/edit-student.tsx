@@ -33,10 +33,11 @@ export default function EditStudentForm({ userData }: UserFieldProps) {
             [FIELD_PARAMS.ASSIGN_LICENSE]: userData[FIELD_PARAMS.ASSIGN_LICENSE],
         },
     });
-
+    
     const handleSubmitForm = async (data: coreFormData) => {
         try {
             await updateStudent(data, userData.id)
+            form.reset(data)
         } catch {
             toast({
                 variant: "destructive",
@@ -54,13 +55,13 @@ export default function EditStudentForm({ userData }: UserFieldProps) {
             open={isOpen}
             onOpenChange={setIsOpen}
             trigger={<Button className="flex items-center gap-2" onClick={() => {
-                setIsOpen(true)
                 if (!isOpen) form.reset();
+                setIsOpen(true)
             }} >
                 <Pencil size={16} />
                 Edit
             </Button>}
-            title="Add new client"
+            title="Update student"
         >
             <div className="flex flex-col gap-6">
                 <Form {...form}>
@@ -72,7 +73,7 @@ export default function EditStudentForm({ userData }: UserFieldProps) {
                                 name={FIELD_PARAMS.FIRST_NAME}
                                 render={({ field, fieldState }) => (
                                     <FormItem>
-                                        <FormLabel>First Name</FormLabel>
+                                        <FormLabel>First name</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -85,7 +86,7 @@ export default function EditStudentForm({ userData }: UserFieldProps) {
                                 name={FIELD_PARAMS.LAST_NAME}
                                 render={({ field, fieldState }) => (
                                     <FormItem>
-                                        <FormLabel>Last Name</FormLabel>
+                                        <FormLabel>Last name</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -98,7 +99,7 @@ export default function EditStudentForm({ userData }: UserFieldProps) {
                                 name={FIELD_PARAMS.ROLE_ID}
                                 render={({ field, fieldState }) => (
                                     <FormItem>
-                                        <FormLabel>Role ID</FormLabel>
+                                        <FormLabel>Student ID</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>

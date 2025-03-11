@@ -93,7 +93,7 @@ export default function BulkAddStudentForm() {
                     setIsOpen(true)
                     if (!isOpen) form.reset();
                 }}><HardDriveUpload /><span className="text-sm">Bulk Upload</span></Button>}
-                title="Add New Student"
+                title="Add New Students"
             >
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-md m-auto space-y-4">

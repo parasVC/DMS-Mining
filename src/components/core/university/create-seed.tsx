@@ -24,7 +24,7 @@ export default function CreateSeed() {
   const { setBreadcrumbs } = useBreadcrumb();
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Seed Generation", href: "#" }]);
+    setBreadcrumbs([{ label: "Seeds Generation", href: "#" }]);
   }, [setBreadcrumbs]);
   
   const router = useRouter();

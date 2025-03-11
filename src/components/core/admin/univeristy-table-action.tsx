@@ -16,11 +16,11 @@ const UniveristyAableAction = ({ id, university_name }: { id: number, university
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <Button onClick={() => router.push(`/admin/university/view/${id}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><Eye size={16} />
+                <Button onClick={() => router.push(`/admin/universities/view/${id}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><Eye size={16} />
                     View
                 </Button>
                 <AssignLicense clientId={id} />
-                <Button onClick={() => router.push(`/admin/university/license-history?university_id=${id}&university_name=${university_name}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><FileClock size={16} />
+                <Button onClick={() => router.push(`/admin/universities/license-history?university_id=${id}&university_name=${university_name}`)} variant={"ghost"} className="p-2 w-full flex gap-3 justify-start items-center"><FileClock size={16} />
                     License History
                 </Button>
                 <DeleteUniversityPopup id={id} />

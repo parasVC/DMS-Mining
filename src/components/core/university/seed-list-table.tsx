@@ -21,7 +21,7 @@ export default function SeedListTable({
     const { setBreadcrumbs } = useBreadcrumb();
 
     useEffect(() => {
-        setBreadcrumbs([{ label: "Seed", href: "#" }]);
+        setBreadcrumbs([{ label: "Seeds", href: "#" }]);
     }, [setBreadcrumbs]);
     return (
         <div className="space-y-4">

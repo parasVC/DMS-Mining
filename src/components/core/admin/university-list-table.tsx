@@ -21,7 +21,7 @@ export default function UniversityListTable({ data, url }: TableComponentProps) 
 
     useEffect(() => {
         setBreadcrumbs([
-            { label: "University", href: "#" },
+            { label: "Universities", href: "#" },
         ]);
     }, [setBreadcrumbs]);
 

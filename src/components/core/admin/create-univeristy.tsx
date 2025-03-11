@@ -55,7 +55,7 @@ export default function CreateUniversityForm({
                 setIsOpen(true)
                 if (!isOpen) form.reset();
             }}><PlusCircle /><span className="text-sm">Add New University</span></Button>}
-            title="Add new client"
+            title="Add new university"
         >
             <div className={cn("flex flex-col gap-6", className)} {...props}>
                 <Form {...form}>

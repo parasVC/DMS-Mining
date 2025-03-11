@@ -35,6 +35,7 @@ export default function EditUniversityForm({ userData }: UserFieldProps) {
     const handleSubmitForm = async (data: coreFormData) => {
         try {
             await updateUniversity(userData.id, data)
+            form.reset(data)
         } catch {
             toast({
                 variant: "destructive",
@@ -58,7 +59,7 @@ export default function EditUniversityForm({ userData }: UserFieldProps) {
                 <Pencil size={16} />
                 Edit
             </Button>}
-            title="Add new client"
+            title="Update university"
         >
             <div className="flex flex-col gap-6">
                 <Form {...form}>
@@ -81,7 +82,7 @@ export default function EditUniversityForm({ userData }: UserFieldProps) {
                             name={FIELD_PARAMS.ROLE_ID}
                             render={({ field, fieldState }) => (
                                 <FormItem>
-                                    <FormLabel>Role ID</FormLabel>
+                                    <FormLabel>University ID</FormLabel>
                                     <FormControl>
                                         <Input  {...field} />
                                     </FormControl>

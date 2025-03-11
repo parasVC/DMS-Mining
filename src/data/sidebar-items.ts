@@ -27,8 +27,8 @@ export const sidebarItems = {
       label: "Overview",
       items: [
         {
-          title: "University",
-          path: "/admin/university",
+          title: "Universities",
+          path: "/admin/universities",
           icon: GraduationCap,
         }
       ],
@@ -41,19 +41,19 @@ export const sidebarItems = {
       items: [
         {
           title: "Students",
-          path: "/university/student",
+          path: "/university/students",
           icon: Contact,
           isActive: false,
         },
         {
           title: "Licenses",
-          path: "/university/license",
+          path: "/university/licenses",
           icon: Crown,
           isActive: false,
         },
         {
-          title: "Seed",
-          path: "/university/seed",
+          title: "Seeds",
+          path: "/university/seeds",
           icon: Bean,
           isActive: false,
         }

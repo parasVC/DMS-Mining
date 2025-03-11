@@ -177,7 +177,7 @@ export const useUniversityActions = () => {
 
     if (res.status === "success") {
       toast({
-        title: "Update client successful",
+        title: "Update student successful",
         description: res.message,
       });
       router.refresh();
@@ -185,7 +185,7 @@ export const useUniversityActions = () => {
     } else {
       toast({
         variant: "destructive",
-        title: "Client Not Update",
+        title: "Student Not Update",
         description: res.message,
       });
     }

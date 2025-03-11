@@ -28,7 +28,7 @@ const StudentProfileDetail = ({ userData }: UserFieldProps) => {
 
     useEffect(() => {
         setBreadcrumbs([
-            { label: "Student", href: "/university/student" },
+            { label: "Students", href: "/university/students" },
             { label: `${studentName}`, href: "#" },
         ]);
     }, [setBreadcrumbs]);
@@ -54,7 +54,7 @@ const StudentProfileDetail = ({ userData }: UserFieldProps) => {
                 <CardContent>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         {[
-                            { label: "Role ID", value: userData[FIELD_PARAMS.ROLE_ID], icon: <IdCard size={22} className="text-blue-500" /> },
+                            { label: "Student ID", value: userData[FIELD_PARAMS.ROLE_ID], icon: <IdCard size={22} className="text-blue-500" /> },
                             { label: "Licence", value: userData[FIELD_PARAMS.LICENSE_NUMBER], icon: <Crown size={22} className="text-blue-500" />, action: "Remove Licence" },
                             { label: "Email", value: userData.email, icon: <MailOpen size={22} className="text-blue-500" /> },
                             { label: "Contact", value: userData.contact, icon: <LucidePhone size={22} className="text-blue-500" /> },
@@ -65,7 +65,7 @@ const StudentProfileDetail = ({ userData }: UserFieldProps) => {
                                     {item.icon}
                                     <div>
                                         <p className="text-xs text-gray-500">{item.label}</p>
-                                        <p className="text-sm font-medium">{item.value}</p>
+                                        <p className="text-sm font-medium break-all">{item.value}</p>
                                     </div>
                                 </div>
                                 {item.action && <TooltipProvider>

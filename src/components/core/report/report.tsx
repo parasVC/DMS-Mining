@@ -19,8 +19,8 @@ const StudentReport = ({ reportData, seed_id, student_name, user_id }: ReportDat
   const { setBreadcrumbs } = useBreadcrumb();
   useEffect(() => {
           setBreadcrumbs([
-              { label: "Student", href: "/university/student" },
-              { label: `${student_name}`, href: `/university/student/view/${user_id}` },
+              { label: "Students", href: "/university/students" },
+              { label: `${student_name}`, href: `/university/students/view/${user_id}` },
               { label: "Report", href: "#" },
           ]);
       }, [setBreadcrumbs]);

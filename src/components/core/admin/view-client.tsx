@@ -7,12 +7,12 @@ import { FIELD_PARAMS } from "@/constant/params";
 import { UserFieldProps } from "@/types/user-field";
 import { useBreadcrumb } from "@/context/breadcrumb-context";
 
-export default function ViewClient({ userData }: UserFieldProps) {
+export default function ViewUniversity({ userData }: UserFieldProps) {
         const { setBreadcrumbs } = useBreadcrumb();
     
       useEffect(() => {
         setBreadcrumbs([
-          { label: "University", href: "/admin/university" },
+          { label: "Universities", href: "/admin/universities" },
           { label: `${userData.university_name}`, href: "#" },
         ]);
       }, [setBreadcrumbs]);
@@ -20,7 +20,7 @@ export default function ViewClient({ userData }: UserFieldProps) {
     return (
         <Card className="p-6">
             <div className="flex justify-between items-center">
-                <h2 className="text-lg font-semibold">Client Information</h2>
+                <h2 className="text-lg font-semibold">University Information</h2>
                 <EditUniversityForm userData={userData}/>
             </div>
 

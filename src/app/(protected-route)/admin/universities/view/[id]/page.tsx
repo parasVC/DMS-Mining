@@ -1,5 +1,5 @@
 import React from 'react'
-import ViewClient from '@/components/core/admin/view-client';
+import ViewUniversity from '@/components/core/admin/view-client';
 import { redirect } from 'next/navigation';
 import axios from 'axios';
 import { fetchData } from '@/lib/request/fetch-data';
@@ -30,7 +30,7 @@ const page = async ({ params }: any) => {
   }
 
   return (
-    <ViewClient userData={res.data} />
+    <ViewUniversity userData={res.data} />
   )
 }
 

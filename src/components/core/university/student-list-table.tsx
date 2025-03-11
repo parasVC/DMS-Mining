@@ -27,7 +27,7 @@ export default function StudentsListTable({
   const { setBreadcrumbs } = useBreadcrumb();
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Student", href: "#" }]);
+    setBreadcrumbs([{ label: "Students", href: "#" }]);
   }, [setBreadcrumbs]);
 
 
