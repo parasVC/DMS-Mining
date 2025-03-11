@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,65 +8,40 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import { coreFormData, coreFormSchema } from "@/schema/form-schema";
 import { DialogClose } from "@/components/ui/dialog";
-import { reqeustServer } from "@/actions/reqeust-server-api";
 import Popup from "@/components/core/popup";
 import { Textarea } from "@/components/ui/textarea";
+import { useAdminActions } from "@/hooks/use-admin-actions";
 export default function CreateUniversityForm({
     className,
     ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+    const { createUniviersity } = useAdminActions();
     const [isOpen, setIsOpen] = useState(false);
-    const router = useRouter()
     const { toast } = useToast()
     const form = useForm<coreFormData>({
         resolver: zodResolver(coreFormSchema),
         defaultValues: {
             university_name: "",
-            role_id : "",
+            role_id: "",
             email: "",
             contact: "",
-            address : "",
-            email_sent : true
+            address: "",
+            email_sent: true
         },
     });
 
     const handleSubmitForm = async (data: coreFormData) => {
-
         try {
-            const res = await reqeustServer({
-                body: data,
-                url: "client/create?user_type=client",
-                method: "POST",
-                token : true
-            })
-            
-            if (res.status === "success") {
-                toast({
-                    title: "Create client successful",
-                    description: res.message,
-                });
-                form.reset();
-                setIsOpen(false);
-                router.refresh();
-                return;
-            } else {
-                toast({
-                    variant: "destructive",
-                    title: "Client Not crated",
-                    description: res.message,
-                });
-                form.reset();
-            }
-
+            await createUniviersity(data)
         } catch {
             toast({
                 variant: "destructive",
                 title: "Uh oh! Something went wrong.",
                 description: "There was a problem with your request."
             })
+        } finally {
             setIsOpen(false)
         }
     };
@@ -77,7 +51,10 @@ export default function CreateUniversityForm({
         <Popup
             open={isOpen}
             onOpenChange={setIsOpen}
-            trigger={<Button className="p-3" variant={"outline"} onClick={() => setIsOpen(true)}><PlusCircle /><span className="text-sm">Add New University</span></Button>}
+            trigger={<Button className="p-3" variant={"outline"} onClick={() => {
+                setIsOpen(true)
+                if (!isOpen) form.reset();
+            }}><PlusCircle /><span className="text-sm">Add New University</span></Button>}
             title="Add new client"
         >
             <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -151,15 +128,15 @@ export default function CreateUniversityForm({
                             />
 
                         </div>
-                            <div className="flex gap-2 justify-end">
-                                <Button type="submit" disabled={form.formState.isSubmitting}>
-                                    {form.formState.isSubmitting && <LoaderCircle className="mr-2 size-4 animate-spin" />}
-                                    Add
-                                </Button>
-                                <DialogClose asChild>
-                                    <Button type="button" variant="secondary">Cancel</Button>
-                                </DialogClose>
-                            </div>
+                        <div className="flex gap-2 justify-end">
+                            <Button type="submit" disabled={form.formState.isSubmitting}>
+                                {form.formState.isSubmitting && <LoaderCircle className="mr-2 size-4 animate-spin" />}
+                                Add
+                            </Button>
+                            <DialogClose asChild>
+                                <Button type="button" variant="secondary">Cancel</Button>
+                            </DialogClose>
+                        </div>
                     </form>
                 </Form>
             </div >

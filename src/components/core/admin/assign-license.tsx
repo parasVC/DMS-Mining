@@ -15,10 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import { coreFormData, coreFormSchema } from "@/schema/form-schema";
 import { DialogClose } from "@/components/ui/dialog";
-import { reqeustServer } from "@/actions/reqeust-server-api";
 import Popup from "@/components/core/popup";
 import { FIELD_PARAMS } from "@/constant/params";
 import { format, addMonths, addYears } from "date-fns";
@@ -28,10 +26,11 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { DayPicker } from "react-day-picker";
+import { useAdminActions } from "@/hooks/use-admin-actions";
 
 export default function AssignLicense({ clientId }: { clientId: number }) {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
+  const { assignLicense } = useAdminActions();
   const { toast } = useToast();
 
   const form = useForm<coreFormData>({
@@ -55,40 +54,14 @@ export default function AssignLicense({ clientId }: { clientId: number }) {
 
   const handleSubmitForm = async (data: coreFormData) => {
     try {
-      const res = await reqeustServer({
-        body: {
-          ...data,
-          [FIELD_PARAMS.NUM_LICENSES]: Number(data[FIELD_PARAMS.NUM_LICENSES]),
-          [FIELD_PARAMS.CLIENT_ID]: clientId,
-        },
-        url: "license/create",
-        method: "POST",
-        token: true,
-      });
-
-      if (res.status === "success") {
-        toast({
-          title: "Assign license successful",
-          description: res.message,
-        });
-        form.reset();
-        setIsOpen(false);
-        router.refresh();
-        return;
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Not Assign",
-          description: res.message,
-        });
-        form.reset();
-      }
+      await assignLicense(data, clientId);
     } catch {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description: "There was a problem with your request.",
       });
+    } finally {
       setIsOpen(false);
     }
   };
@@ -101,7 +74,10 @@ export default function AssignLicense({ clientId }: { clientId: number }) {
         <Button
           className="p-2 flex gap-3 justify-start items-center"
           variant={"ghost"}
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            setIsOpen(true)
+            if (!isOpen) form.reset();
+          }}
         >
           <Crown size={16} />
           <span className="text-sm">Assign licenses</span>

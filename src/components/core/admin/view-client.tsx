@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import EditUniversityForm from "@/components/core/admin/edit-university";
 import { FIELD_PARAMS } from "@/constant/params";
 import { UserFieldProps } from "@/types/user-field";
-import { useBreadcrumb } from "@/context/BreadcrumbContext";
+import { useBreadcrumb } from "@/context/breadcrumb-context";
 
 export default function ViewClient({ userData }: UserFieldProps) {
         const { setBreadcrumbs } = useBreadcrumb();

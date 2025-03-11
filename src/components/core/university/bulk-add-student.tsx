@@ -13,29 +13,27 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { FIELD_PARAMS } from "@/constant/params";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { coreFormData, coreFormSchema } from "@/schema/form-schema";
-import { reqeustServer } from "@/actions/reqeust-server-api";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
-import { fileUpload } from "@/actions/file-upload";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useUniversityActions } from "@/hooks/use-university-action";
 
 interface Data {
     total_students: number;
-    total_assigned_students : number;
+    total_assigned_students: number;
     total_unassigned_students: number;
-    unassigned_students_link : string
+    unassigned_students_link: string
     // Add other properties that you expect to be present in the data object
 }
 export default function BulkAddStudentForm() {
     const { toast } = useToast()
-    const router = useRouter()
     const [isOpen, setIsOpen] = useState(false);
     const [isWarningOpen, setIsWarningOpen] = useState(false);
-    const [data, setData] = useState<Data>( {
+    const { createBulkStudent, downloadSampleFile, downloadUnallocateFile } = useUniversityActions()
+    const [data, setData] = useState<Data>({
         total_students: 0,
-        total_assigned_students : 0,
-        total_unassigned_students : 0,
-        unassigned_students_link : ""
+        total_assigned_students: 0,
+        total_unassigned_students: 0,
+        unassigned_students_link: ""
 
     })
     const form = useForm<coreFormData>({
@@ -57,105 +55,33 @@ export default function BulkAddStudentForm() {
         formData.append("file", data.file);
 
         try {
-            const res = await fileUpload({
-                formData,
-                assign_license: data.assign_license
-            })
-
-            if (res.status === "success") {
-                toast({
-                    title: "Create students successful",
-                    description: res.message,
-                });
-                form.reset();
-
-                setData(res.data)
-
-                if(res.data.total_unassigned_students > 0 ) {setIsWarningOpen(true)}
-                setIsOpen(false);
-                router.refresh();
-                return;
-            } else {
-                toast({
-                    variant: "destructive",
-                    title: "Students not created",
-                    description: res.message,
-                });
-                form.reset();
-            }
-
+            const result = await createBulkStudent(formData, data[FIELD_PARAMS.ASSIGN_LICENSE], setIsWarningOpen)
+            if (result) setData(result)
         } catch {
             toast({
                 variant: "destructive",
                 title: "Uh oh! Something went wrong.",
                 description: "There was a problem with your request."
             })
-            setIsOpen(false)
+        } finally {
+            setIsOpen(false);
         }
     };
 
     const downloadFile = async (e) => {
         e.stopPropagation();
         try {
-            const response = await reqeustServer({
-                url: "student/download-sample-excel",
-                method: "GET",
-                token: true,
-                options: { responseType: "blob" },
-                headerOptions: { "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
-            })
-            const res = JSON.parse(response)
-
-            if (res.status === "success") {
-                const url = res.data.download_link;
-                const link = document.createElement("a");
-                link.href = url;
-                link.setAttribute("download", "sample_students_data.xlsx");
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                toast({
-                    title: "Download",
-                    description: res.message,
-                });
-                form.reset();
-                setIsOpen(false);
-                router.refresh();
-                return;
-            } else {
-                toast({
-                    variant: "destructive",
-                    title: "Download failed",
-                    description: res.message,
-                });
-                form.reset();
-            }
-
+            await downloadSampleFile()
         } catch {
             toast({
                 variant: "destructive",
                 title: "Uh oh! Something went wrong.",
                 description: "There was a problem with your request."
             })
-            setIsOpen(false)
-        }
-    }
 
-
-    const downloadUnallocateFile = () => {
-        if (!data.unassigned_students_link) {
-            alert("No file available for download!");
-            return;
+        } finally {
+            setIsOpen(false);
         }
-        const link = document.createElement("a");
-        link.href = data.unassigned_students_link;
-        link.setAttribute("download", "23412.xlsx");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
     }
 
     return (
@@ -163,7 +89,10 @@ export default function BulkAddStudentForm() {
             <Popup
                 open={isOpen}
                 onOpenChange={setIsOpen}
-                trigger={<Button className="p-3" variant="outline" onClick={() => setIsOpen(true)}><HardDriveUpload /><span className="text-sm">Bulk Upload</span></Button>}
+                trigger={<Button className="p-3" variant="outline" onClick={() => {
+                    setIsOpen(true)
+                    if (!isOpen) form.reset();
+                }}><HardDriveUpload /><span className="text-sm">Bulk Upload</span></Button>}
                 title="Add New Student"
             >
                 <Form {...form}>
@@ -256,22 +185,17 @@ export default function BulkAddStudentForm() {
                     <DialogHeader>
                         <DialogTitle className="text-lg font-semibold">Warning</DialogTitle>
                     </DialogHeader>
-
                     <div className="bg-yellow-100 border-l-4 text-sm border-yellow-500 text-yellow-800 p-4 rounded-md flex items-center gap-3">
                         <AlertTriangle size={45} className=" text-yellow-600" />
                         <div className="text-black">
                             <p>Out of {data.total_students} records, <strong>{data.total_assigned_students} licenses</strong> have been allotted.</p>
                             <p>Download the file for unallocated records.</p>
                         </div>
-                        {/* <div className="flex justify-start p-1"> */}
-                        <Button type="button" onClick={() => downloadUnallocateFile()} variant="ghost" className="flex w-24 p-2 items-center gap-2 text-white bg-[#FFB60B]">
+                        <Button type="button" onClick={() => downloadUnallocateFile(data.unassigned_students_link)} variant="ghost" className="flex w-24 p-2 items-center gap-2 text-white bg-[#FFB60B]">
                             <Download />
                             Download
                         </Button>
-                        {/* </div> */}
                     </div>
-
-
                     <DialogFooter className="mt-4 flex justify-end gap-2">
                         <Button onClick={() => setIsWarningOpen(false)}>Ok</Button>
                     </DialogFooter>

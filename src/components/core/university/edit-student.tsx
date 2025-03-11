@@ -4,24 +4,22 @@ import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle, Pencil, TriangleAlert } from "lucide-react";
 import { useForm } from "react-hook-form";
-
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import Popup from "@/components/core/popup";
 import { coreFormData, coreFormSchema } from "@/schema/form-schema";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { reqeustServer } from "@/actions/reqeust-server-api";
 import { FIELD_PARAMS } from "@/constant/params";
 import { Textarea } from "@/components/ui/textarea";
 import { UserFieldProps } from "@/types/user-field";
+import { useUniversityActions } from "@/hooks/use-university-action";
 
 export default function EditStudentForm({ userData }: UserFieldProps) {
 
     const [isOpen, setIsOpen] = useState(false);
-    const router = useRouter()
+    const { updateStudent } = useUniversityActions()
     const { toast } = useToast()
     const form = useForm<coreFormData>({
         resolver: zodResolver(coreFormSchema),
@@ -37,40 +35,16 @@ export default function EditStudentForm({ userData }: UserFieldProps) {
     });
 
     const handleSubmitForm = async (data: coreFormData) => {
-
         try {
-            const res = await reqeustServer({
-                url: `student/update?student_id=${userData.id}`,
-                body: data,
-                method: "PUT",
-                token: true
-            })
-
-            if (res.status === "success") {
-                toast({
-                    title: "Update client successful",
-                    description: res.message,
-                });
-                form.reset();
-                setIsOpen(false);
-                router.refresh();
-                return;
-            } else {
-                toast({
-                    variant: "destructive",
-                    title: "Client Not Update",
-                    description: res.message,
-                });
-                form.reset();
-            }
-
-        } catch  {
+            await updateStudent(data, userData.id)
+        } catch {
             toast({
                 variant: "destructive",
                 title: "Uh oh! Something went wrong.",
                 description: "There was a problem with your request."
             })
-            setIsOpen(false)
+        } finally {
+            setIsOpen(false);
         }
     };
 
@@ -79,7 +53,10 @@ export default function EditStudentForm({ userData }: UserFieldProps) {
         <Popup
             open={isOpen}
             onOpenChange={setIsOpen}
-            trigger={<Button className="flex items-center gap-2" onClick={() => setIsOpen(true)} >
+            trigger={<Button className="flex items-center gap-2" onClick={() => {
+                setIsOpen(true)
+                if (!isOpen) form.reset();
+            }} >
                 <Pencil size={16} />
                 Edit
             </Button>}

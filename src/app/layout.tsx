@@ -8,7 +8,7 @@ import Providers from "@/components/core/provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Mining DME",
+  title: "DMS",
   description: "App for mining DME",
 };
 

@@ -1,6 +1,7 @@
 "use server";
 import { fetchData } from "@/lib/request/fetch-data";
 import { FetcherProps } from "@/lib/request/type";
+import axios from "axios";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function reqeustServer({
@@ -12,7 +13,6 @@ export async function reqeustServer({
     headerOptions = {},
 }: FetcherProps) {
     try {
-
         const res = await fetchData({
             url,
             method,
@@ -25,11 +25,22 @@ export async function reqeustServer({
         return res;
 
     } catch (error: any) {
-        if (error?.status === 401) {
-            return {
-                statusCode: 401
+        if (axios.isAxiosError(error)) {
+            if (error.response && error.response.data) {
+                return {
+                    status: error.response.data.status || "fail",
+                    data: error.response.data.data || [],
+                    statusCode: error.response.status,
+                    message: error.response.data.message || error.message || "Something went wrong",
+                }
+            } else {
+                return {
+                    status: "fail",
+                    data: [],
+                    statusCode: 400,
+                    message: "Something went wrong",
+                }
             }
         }
-        throw new Error("Something went wrong");
     }
 }

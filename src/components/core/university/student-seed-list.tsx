@@ -13,9 +13,9 @@ interface SeedListProps {
     seed_id: number;
     last_login: string;
     profit_margin: string;
-  }
-const StudentSeedList = ({userData} : UserFieldProps) => {
-    const {toast} = useToast();
+}
+const StudentSeedList = ({ userData }: UserFieldProps) => {
+    const { toast } = useToast();
     const router = useRouter();
     const [seedList, setSeedList] = useState<SeedListProps[]>([]);
     const [isloading, setIsLoading] = useState(false);
@@ -23,19 +23,13 @@ const StudentSeedList = ({userData} : UserFieldProps) => {
         try {
             setIsLoading(true)
             const res = await reqeustServer({
-                url : `seed/student/selected?user_id=${userData.id}`,
-                method : "GET",
-                token : true
+                url: `seed/student/selected?user_id=${userData.id}`,
+                method: "GET",
+                token: true
             })
-            if(res.status === "success" && res.data.length > 0) {
+            if (res.status === "success" && res.data.length > 0) {
                 setSeedList(res.data)
-                
-            }else{
-                toast({
-                    variant: "destructive",
-                    title: "No seeds found",
-                    description: res.message,
-                });
+
             }
         } catch {
             toast({
@@ -43,13 +37,13 @@ const StudentSeedList = ({userData} : UserFieldProps) => {
                 title: "Uh oh! Something went wrong.",
                 description: "There was a problem with your request."
             })
-        } finally{
+        } finally {
             setIsLoading(false)
-        }   
+        }
     }
     useEffect(() => {
         fetchSeedList()
-    },[])
+    }, [])
     return (
         <>
             <div>
@@ -70,9 +64,9 @@ const StudentSeedList = ({userData} : UserFieldProps) => {
                             <span className="font-medium">{report.profit_margin}</span>
                         </div>
                     </Card>
-                ))): <div>No seed found</div>}
+                ))) : <div>No seed found</div>}
                 {isloading && (
-                    <div><Loader/></div>
+                    <div><Loader /></div>
                 )}
             </div>
         </>

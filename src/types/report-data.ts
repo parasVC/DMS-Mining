@@ -18,5 +18,6 @@ export interface ReportFieldProps {
         totalCost: number,
         totalRevenue: number,
         operatingBudget: number,
-        last_login:string
+        last_login:string,
+        totalWasteTonsMined: number
 }

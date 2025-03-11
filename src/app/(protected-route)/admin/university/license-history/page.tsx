@@ -1,5 +1,6 @@
-import { reqeustServer } from "@/actions/reqeust-server-api";
 import LicenseHistoryTable from "@/components/core/admin/license-history-table";
+import { fetchData } from "@/lib/request/fetch-data";
+import axios from "axios";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -17,30 +18,34 @@ const LicenseHistoryPage = async ({ searchParams }: any) => {
   const universityId = university_id ? university_id : "";
   const createdAt = created_at ? created_at : "";
   let res;
- 
+
   try {
-    res = await reqeustServer({
+    res = await fetchData({
       url: `license/client/list/?page=${pageVal}&per_page=${perPage}&client_id=${universityId}&status=${statusVal}&created_at=${createdAt}`,
       method: "GET",
       token: true,
     });
   } catch (error) {
-    if (error.status === 401) {
-      redirect("/auth/login");
-    } else {
-      throw new Error(error instanceof Error ? error.message : "Unknown error occurred");
-    }
+    if (axios.isAxiosError(error) && error.response) {
+      if ( error.response.status === 401) {
+          redirect("/auth/login");
+      } else if (error.response.data) {
+          throw new Error(error.response.data.message || "Something went wrong");
+      } else {
+          throw new Error(error.message || "Something went wrong");
+      }
+  } else {
+      throw new Error(error.message || "Something went wrong");
+  }
   }
 
   return (
     <LicenseHistoryTable
-      data={res.data.data}
-      page={pageVal}
-      total={res.data.total}
-      totalPages={res.data.pages}
-      perPage={perPage}
+      data={res.data}
       university_id={university_id}
       university_name={university_name}
+      url={"license/client/list"}
+      query= {{client_id: universityId}}
     />
   );
 };

@@ -10,18 +10,17 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from 
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
-import { coreFormData,coreFormSchema } from "@/schema/form-schema";
+import { coreFormData, coreFormSchema } from "@/schema/form-schema";
 import Popup from "@/components/core/popup";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { reqeustServer } from "@/actions/reqeust-server-api";
 import { FIELD_PARAMS } from "@/constant/params";
+import { useUniversityActions } from "@/hooks/use-university-action";
 export default function AddSingleUserForm({
     className,
     ...props
 }: React.ComponentPropsWithoutRef<"div">) {
     const [isOpen, setIsOpen] = useState(false);
-    const router = useRouter()
+    const { createStudent } = useUniversityActions()
     const { toast } = useToast()
     const form = useForm<coreFormData>({
         resolver: zodResolver(coreFormSchema),
@@ -33,45 +32,21 @@ export default function AddSingleUserForm({
             [FIELD_PARAMS.LAST_NAME]: "",
             [FIELD_PARAMS.ROLE_ID]: "",
             [FIELD_PARAMS.ASSIGN_LICENSE]: true,
-            [FIELD_PARAMS.EMAIL_SENT] :true,
-    },
+            [FIELD_PARAMS.EMAIL_SENT]: true,
+        },
     });
 
     const handleSubmitForm = async (data: coreFormData) => {
-
         try {
-            const res = await reqeustServer({
-                body: data,
-                url: "student/create?user_type=student",
-                method:"POST",
-                token : true
-            })
-            
-            if (res.status === "success") {
-                toast({
-                    title: "Create student successful",
-                    description: res.message,
-                });
-                form.reset();
-                setIsOpen(false);
-                router.refresh();
-                return;
-            } else {
-                toast({
-                    variant: "destructive",
-                    title: "Student Not crated",
-                    description: res.message,
-                });
-                form.reset();
-            }
-
-        } catch  {
+            await createStudent(data)
+        } catch {
             toast({
                 variant: "destructive",
                 title: "Uh oh! Something went wrong.",
                 description: "There was a problem with your request."
             })
-            setIsOpen(false)
+        } finally {
+            setIsOpen(false);
         }
     };
 
@@ -80,7 +55,11 @@ export default function AddSingleUserForm({
         <Popup
             open={isOpen}
             onOpenChange={setIsOpen}
-            trigger={<Button className="p-3" variant={"outline"} onClick={() => setIsOpen(true)}><PlusCircle /><span className="text-sm">Add New</span></Button>}
+            trigger={<Button className="p-3" variant={"outline"} onClick={() => {
+                setIsOpen(true)
+                if (!isOpen) form.reset();
+            }}>
+                <PlusCircle /><span className="text-sm">Add New</span></Button>}
             title="Add New Student"
         >
             <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -206,7 +185,7 @@ export default function AddSingleUserForm({
 
                         {/* Buttons */}
                         <div className="flex gap-2 justify-end">
-                            <Button onClick={()=> setIsOpen(false)} type="button" variant="secondary">Cancel</Button>
+                            <Button onClick={() => setIsOpen(false)} type="button" variant="secondary">Cancel</Button>
                             <Button className="min-w-20" type="submit" disabled={form.formState.isSubmitting}>
                                 {form.formState.isSubmitting && <LoaderCircle className="mr-2 size-4 animate-spin" />}
                                 Add
@@ -215,7 +194,6 @@ export default function AddSingleUserForm({
                     </form>
                 </Form>
             </div>
-
         </Popup>
     );
 }

@@ -1,28 +1,33 @@
 import { Button } from '@/components/ui/button'
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationNext, PaginationPrevious, PaginationFirst, PaginationLast } from '@/components/ui/pagination'
 import React from 'react'
-import { useTableFN } from '@/hooks/use-table'
+import { useFilterContext } from '@/context/filter-context';
 
 interface PaginationProps {
-  page: number;
-  perPage: number;
-  totalPages : number
+  totalPages: number
 }
-const PaginationTable = ({page, perPage,totalPages} : PaginationProps) => {
-  const {handlePageChange} = useTableFN()
+const PaginationTable = ({ totalPages }: PaginationProps) => {
+  const {filters ,setFilter} = useFilterContext()
+  const page: number = filters.page ? Number(filters.page) : 1;
   return (
     <Pagination className="flex justify-end">
       <PaginationContent>
         <PaginationItem>
+          <PaginationFirst
+            onClick={() => page > 1 && setFilter("page",1)}
+            className={`cursor-pointer ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+          />
+        </PaginationItem>
+        <PaginationItem>
           <PaginationPrevious
-            onClick={() => page > 1 && handlePageChange(page - 1, perPage)}
+            onClick={() => page > 1 && setFilter("page", page-1)}
             className={`cursor-pointer ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
           />
         </PaginationItem>
         {page > 2 && <PaginationItem><PaginationEllipsis /></PaginationItem>}
         {Array.from({ length: totalPages }, (_, i) => i + 1).slice(page - 1, page + 2).map((p) => (
           <PaginationItem key={p}>
-            <Button variant={p === page ? "default" : "outline"} onClick={() => handlePageChange(p, perPage)}>
+            <Button variant={p === page ? "default" : "outline"} onClick={() => setFilter("page",p)}>
               {p}
             </Button>
           </PaginationItem>
@@ -30,7 +35,13 @@ const PaginationTable = ({page, perPage,totalPages} : PaginationProps) => {
         {page < totalPages - 1 && <PaginationItem><PaginationEllipsis /></PaginationItem>}
         <PaginationItem>
           <PaginationNext
-            onClick={() => page < totalPages && handlePageChange(page + 1, perPage)}
+            onClick={() => page < totalPages && setFilter("page",page + 1)}
+            className={`cursor-pointer ${page === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
+          />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLast
+            onClick={() => page < totalPages && setFilter("page",totalPages)}
             className={`cursor-pointer ${page === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
           />
         </PaginationItem>

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
 import { ReportFieldProps } from "@/types/report-data";
-import { useBreadcrumb } from "@/context/BreadcrumbContext";
+import { useBreadcrumb } from "@/context/breadcrumb-context";
 
 
 interface ReportDataProps {
@@ -57,7 +57,7 @@ const StudentReport = ({ reportData, seed_id, student_name, user_id }: ReportDat
       {/* Sections */}
       <Section title="Production Summary">
         <Grid>
-          <InfoItem label="Waste Mined" value={`${reportData?.minedWaste}T`} />
+          <InfoItem label="Waste Mined" value={`${reportData?.totalWasteTonsMined}T`} />
           <InfoItem
             label="Low Grade (LG) Ore Mined"
             value={`${reportData?.minedLg}T`}

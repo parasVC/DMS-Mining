@@ -7,7 +7,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { useBreadcrumb } from "@/context/BreadcrumbContext";
+import { useBreadcrumb } from "@/context/breadcrumb-context";
 import React from "react";
 
 const DynamicBreadcumb = () => {

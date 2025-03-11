@@ -10,7 +10,7 @@ const SidebarHeaderMenu = () => {
       <CollapsibleTrigger asChild>
         <SidebarMenuButton tooltip={"Home"}>
           <Axe />
-          <span>Mining DME</span>
+          <span>DMS</span>
         </SidebarMenuButton>
       </CollapsibleTrigger>
     </Collapsible>

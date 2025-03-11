@@ -7,7 +7,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { BreadcrumbProvider } from "@/context/BreadcrumbContext";
+import { BreadcrumbProvider } from "@/context/breadcrumb-context";
 import DynamicBreadcumb from "@/components/core/dynamicBreadcumb";
 import { Separator } from "@/components/ui/separator"
 

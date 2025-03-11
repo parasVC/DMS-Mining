@@ -1,19 +1,32 @@
 import React from 'react'
-import { reqeustServer } from "@/actions/reqeust-server-api";
 import ViewClient from '@/components/core/admin/view-client';
 import { redirect } from 'next/navigation';
+import axios from 'axios';
+import { fetchData } from '@/lib/request/fetch-data';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const page = async ({ params }: any) => {
-  const {id} = await params;
-  const res = await reqeustServer({
-    url: `client/retrieve?client_id=${id}`,
-    method : "GET",
-    token: true
-  })
+  const { id } = await params;
+  let res;
 
-  if (res.statusCode === 401) {
-    redirect("/auth/login")
+  try {
+    res = await fetchData({
+      url: `client/retrieve?client_id=${id}`,
+      method: "GET",
+      token: true
+    })
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      if ( error.response.status === 401) {
+          redirect("/auth/login");
+      } else if (error.response.data) {
+          throw new Error(error.response.data.message || "Something went wrong");
+      } else {
+          throw new Error(error.message || "Something went wrong");
+      }
+  } else {
+      throw new Error(error.message || "Something went wrong");
+  }
   }
 
   return (

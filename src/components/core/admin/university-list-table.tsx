@@ -4,34 +4,39 @@ import { useEffect } from "react";
 import { TableDataProps } from "@/data/table/table-columns";
 import Filter from "@/components/core/table/filter";
 import UniversityListHeaderAction from "./university-list-header-action";
-import PaginationTable from '@/components/core/table/pagination';
 import DataTable from '@/components/core/table/table'
-import { useBreadcrumb } from "@/context/BreadcrumbContext";
-
+import { useBreadcrumb } from "@/context/breadcrumb-context";
+import { FilterProvider } from "@/context/filter-context";
 
 interface TableComponentProps {
+  data: {
     data: TableDataProps[];
-    total: number;
-    page: number;
-    totalPages: number;
-    perPage : number
+    pages: number;
+  };
+  url: string;
 }
 
-export default function UniversityListTable({ data, page, totalPages,perPage }: TableComponentProps) {
+export default function UniversityListTable({ data, url }: TableComponentProps) {
     const { setBreadcrumbs } = useBreadcrumb();
 
-  useEffect(() => {
-    setBreadcrumbs([
-      { label: "University", href: "#" },
-    ]);
-  }, [setBreadcrumbs]);
+    useEffect(() => {
+        setBreadcrumbs([
+            { label: "University", href: "#" },
+        ]);
+    }, [setBreadcrumbs]);
 
     return (
         <div className="space-y-4">
-            <UniversityListHeaderAction perPage={perPage} />
-            <Filter filterType={"university_list"} />
-            <DataTable data={data} role={"university_list"} />
-            <PaginationTable page={page} perPage={perPage} totalPages={totalPages}/>
+            <FilterProvider>
+                <UniversityListHeaderAction />
+                <Filter filterType={"university_list"} />
+                <DataTable 
+                    data={data} 
+                    role={"university_list"} 
+                    url={url} 
+                    isPagination={true}
+                />
+            </FilterProvider>
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import UniversityListTable from "@/components/core/admin/university-list-table";
 import { redirect } from "next/navigation";
 import { fetchData } from "@/lib/request/fetch-data";
+import axios from "axios";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default async function TablePage({ searchParams }: any) {
@@ -19,18 +20,21 @@ export default async function TablePage({ searchParams }: any) {
             token: true
         })
     } catch (error) {
-        if (error.status === 401) {
-            redirect("/auth/login");
+        if (axios.isAxiosError(error) && error.response) {
+            if ( error.response.status === 401) {
+                redirect("/auth/login");
+            } else if (error.response.data) {
+                throw new Error(error.response.data.message || "Something went wrong");
+            } else {
+                throw new Error(error.message || "Something went wrong");
+            }
         } else {
-            throw new Error(error instanceof Error ? error.message : "Unknown error occurred");
+            throw new Error(error.message || "Something went wrong");
         }
     }
 
     return <UniversityListTable
-        data={res.data.data}
-        page={pageVal}
-        perPage={perPage}
-        total={res.data.total}
-        totalPages={res.data.pages}
+        data={res.data}
+       url="client/list/data"
     />;
 }

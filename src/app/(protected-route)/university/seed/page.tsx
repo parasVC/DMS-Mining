@@ -1,5 +1,6 @@
-import { reqeustServer } from "@/actions/reqeust-server-api";
 import SeedListTable from "@/components/core/university/seed-list-table";
+import { fetchData } from "@/lib/request/fetch-data";
+import axios from "axios";
 import { redirect } from "next/navigation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -11,19 +12,25 @@ export default async function SeedPage({ searchParams }: any) {
   const pageVal = page ? Number(page) : 1;
   let res;
   try {
-    res = await reqeustServer({
+    res = await fetchData({
       url: `seed/list/pagination?page=${pageVal}&per_page=${perPage}`,
       method: "GET",
       token: true
     })
-    
+
   } catch (error) {
-    if (error.status === 401) {
-      redirect("/auth/login");
+    if (axios.isAxiosError(error) && error.response) {
+      if (error.response.status === 401) {
+        redirect("/auth/login");
+      } else if (error.response.data) {
+        throw new Error(error.response.data.message || "Something went wrong");
+      } else {
+        throw new Error(error.message || "Something went wrong");
+      }
     } else {
-      throw new Error(error instanceof Error ? error.message : "Unknown error occurred");
+      throw new Error(error.message || "Something went wrong");
     }
   }
 
-  return <SeedListTable data={res.data.data} page={pageVal} totalPages={res.data.pages} perPage={perPage} />;
+  return <SeedListTable data={res.data} url={"seed/list/pagination"} />;
 }

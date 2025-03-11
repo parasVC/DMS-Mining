@@ -13,50 +13,48 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useTableFN } from "@/hooks/use-table";
 import { format, parseISO } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useSearchParams } from "next/navigation";
 import { filterField } from "@/data/table/filter-fields";
 import { Label } from "@/components/ui/label";
 import { DayPicker } from "react-day-picker";
+import { useFilterContext } from "@/context/filter-context";
 
 const Filter = ({ filterType }: { filterType: string }) => {
-  const searchParams = useSearchParams();
-  const { updateFilter } = useTableFN();
+  const { filters, setFilter } = useFilterContext();
 
-  const filters = filterField[filterType as keyof typeof filterField];
-  const createdAtValue = searchParams.get(filters.created_at?.key ?? "") ?? "";
+  const field = filterField[filterType as keyof typeof filterField];
+  const createdAtValue = filters[field.created_at?.key ?? ""] ?? "";
 
   const handleKeyDown = (e: React.KeyboardEvent, key: string) => {
     if (e.key === "Enter") {
       const target = e.target as HTMLInputElement;
-      updateFilter(key, target.value);
+      setFilter(key, target.value);
     }
   };
 
   return (
     <div className="flex gap-4 w-full">
-      {filters.input &&
-        filters.input.length > 0 &&
-        filters.input.map((ele, i) => (
+      {field.input &&
+        field.input.length > 0 &&
+        field.input.map((ele, i) => (
           <div
             key={`filter-${ele.key}-${i}`}
             className="flex flex-col gap-3 w-full"
           >
             <Label>{ele.label}</Label>
             <Input
-              defaultValue={searchParams.get(ele.key ?? "") || ""}
-              onBlur={(e) => updateFilter(ele.key, e.target.value)}
+              defaultValue={filters[ele.key] || ""}
+              onBlur={(e) => setFilter(ele.key, e.target.value)}
               onKeyDown={(e)=> handleKeyDown(e, ele.key)}
             />
           </div>
         ))}
 
       {/* Date Picker */}
-      {filters.created_at && (
+      {field.created_at && (
         <div className="flex flex-col gap-3 w-full">
-          <Label>{filters.created_at.label}</Label>
+          <Label>{field.created_at.label}</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -65,18 +63,18 @@ const Filter = ({ filterType }: { filterType: string }) => {
               >
                 <CalendarIcon className="h-4 w-4" />
                 {createdAtValue
-                  ? format(parseISO(createdAtValue), "yyyy-MM-dd")
+                  ? format(parseISO(createdAtValue.toString()), "yyyy-MM-dd")
                   : "Select Date"}
               </Button>
             </PopoverTrigger>
             <PopoverContent align="start" className="w-auto p-0">
               <DayPicker
                 mode="single"
-                selected={createdAtValue ? parseISO(createdAtValue) : undefined}
+                selected={createdAtValue ? parseISO(createdAtValue.toString()) : undefined}
                 onSelect={(date) => {
-                  if (filters.created_at?.key) {
-                    updateFilter(
-                      filters.created_at?.key,
+                  if (field.created_at?.key) {
+                    setFilter(
+                      field.created_at?.key,
                       date ? format(date, "yyyy-MM-dd") : ""
                     );
                   }
@@ -88,16 +86,16 @@ const Filter = ({ filterType }: { filterType: string }) => {
       )}
 
       {/* Status Filter */}
-      {filters.select &&
-        filters.select.length > 0 &&
-        filters.select.map((selectItem, index) => (
+      {field.select &&
+        field.select.length > 0 &&
+        field.select.map((selectItem, index) => (
           <div className="flex flex-col gap-3 w-full" key={`select-${index}`}>
             <Label>{selectItem.label}</Label>
             <Select
-              defaultValue={searchParams.get(selectItem.key ?? "") || "all"}
+              defaultValue={String(filters[selectItem.key] || "all")}
               onValueChange={(value) => {
                 if (selectItem.key) {
-                  updateFilter(selectItem.key, value);
+                  setFilter(selectItem.key, value);
                 }
               }}
             >
