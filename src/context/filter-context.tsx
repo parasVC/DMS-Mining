@@ -7,7 +7,7 @@ interface FilterState {
 
 interface FilterContextProps {
   filters: FilterState;
-  setFilter: (key: string, value: string | number) => void;
+  setFilter: (key: string | FilterState, value?: string | number) => void;
 }
 
 const FilterContext = createContext<FilterContextProps | undefined>(undefined);
@@ -15,11 +15,20 @@ const FilterContext = createContext<FilterContextProps | undefined>(undefined);
 export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
   const [filters, setFilters] = useState<FilterState>({});
 
-  const setFilter = (key: string, value: string | number) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+  const setFilter = (key: string | FilterState, value?: string | number) => {
+    if (typeof key === "string" && value !== undefined) {
+      // If key is a string, update a single filter
+      setFilters((prev) => ({
+        ...prev,
+        [key]: value,
+      }));
+    } else if (typeof key === "object" && key !== null) {
+      // If key is an object, update multiple filters at once
+      setFilters((prev) => ({
+        ...prev,
+        ...key,
+      }));
+    }
   };
 
   return (

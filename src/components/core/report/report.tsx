@@ -25,7 +25,7 @@ const StudentReport = ({ reportData, seed_id, student_name, user_id }: ReportDat
           ]);
       }, [setBreadcrumbs]);
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="w-full">
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-3xl font-bold">{seed_id}</h1>
@@ -162,7 +162,7 @@ const Grid = ({ children }: { children: React.ReactNode }) => (
 
 // Info Item
 const InfoItem = ({ label, value }: { label: string; value: string }) => (
-  <Card className="shadow-none border-none border-bottom p-2">
+  <Card className="shadow-none border-0 rounded-none p-2 border-b-[1px] border-solid">
     <CardContent className="p-0">
       <p className="text-gray-500 text-sm">{label}</p>
       <p className="text-lg font-semibold">{value}</p>

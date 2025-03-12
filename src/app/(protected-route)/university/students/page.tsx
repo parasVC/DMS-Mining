@@ -35,7 +35,6 @@ export default async function TablePage({ searchParams }: any) {
     }
   }
 
-
   return (
     <StudentsListTable
       data={res.data}

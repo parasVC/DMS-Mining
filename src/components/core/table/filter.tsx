@@ -29,7 +29,7 @@ const Filter = ({ filterType }: { filterType: string }) => {
   const handleKeyDown = (e: React.KeyboardEvent, key: string) => {
     if (e.key === "Enter") {
       const target = e.target as HTMLInputElement;
-      setFilter(key, target.value);
+      setFilter({[key] : target.value, "page" : 1});
     }
   };
 
@@ -45,7 +45,7 @@ const Filter = ({ filterType }: { filterType: string }) => {
             <Label>{ele.label}</Label>
             <Input
               defaultValue={filters[ele.key] || ""}
-              onBlur={(e) => setFilter(ele.key, e.target.value)}
+              onBlur={(e) => setFilter({[ele.key] : e.target.value, "page" : 1})}
               onKeyDown={(e)=> handleKeyDown(e, ele.key)}
             />
           </div>
@@ -74,8 +74,8 @@ const Filter = ({ filterType }: { filterType: string }) => {
                 onSelect={(date) => {
                   if (field.created_at?.key) {
                     setFilter(
-                      field.created_at?.key,
-                      date ? format(date, "yyyy-MM-dd") : ""
+                      {[field.created_at?.key] :
+                      date ? format(date, "yyyy-MM-dd") : "", "page" : 1}
                     );
                   }
                 }}
@@ -95,7 +95,7 @@ const Filter = ({ filterType }: { filterType: string }) => {
               defaultValue={String(filters[selectItem.key] || "all")}
               onValueChange={(value) => {
                 if (selectItem.key) {
-                  setFilter(selectItem.key, value);
+                  setFilter({[selectItem.key] : value, "page" : 1});
                 }
               }}
             >
