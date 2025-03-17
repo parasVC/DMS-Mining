@@ -20,23 +20,23 @@ const LicenseHistoryPage = async ({ searchParams }: any) => {
   let res;
 
   try {
-    res = await fetchData({
-      url: `license/client/list/?page=${pageVal}&per_page=${perPage}&client_id=${universityId}&status=${statusVal}&created_at=${createdAt}`,
-      method: "GET",
+      res = await fetchData({
+      url: `license/client/list?page=${pageVal}&per_page=${perPage}&client_id=${universityId}&status=${statusVal}&created_at=${createdAt}`,
+          method: "GET",
       token: true,
     });
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      if ( error.response.status === 401) {
-          redirect("/auth/login");
-      } else if (error.response.data) {
-          throw new Error(error.response.data.message || "Something went wrong");
+      if (axios.isAxiosError(error) && error.response) {
+          if ( error.response.status === 401) {
+              redirect("/auth/login");
+          } else if (error.response.data) {
+              throw new Error(error.response.data.message || "Something went wrong");
+          } else {
+              throw new Error(error.message || "Something went wrong");
+          }
       } else {
           throw new Error(error.message || "Something went wrong");
       }
-  } else {
-      throw new Error(error.message || "Something went wrong");
-  }
   }
 
   return (

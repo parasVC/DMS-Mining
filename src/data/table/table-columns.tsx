@@ -2,7 +2,9 @@ import UniveristyAableAction from "@/components/core/admin/univeristy-table-acti
 import StudentTableAction from "@/components/core/university/student-table-action";
 import { Badge } from "@/components/ui/badge";
 import { FIELD_PARAMS } from "@/constant/params";
+import { copyToClipboard } from "@/lib/utils";
 import { format } from "date-fns";
+import { Copy } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -61,18 +63,13 @@ export const tableColumn = {
                 )
             }
         }
-    ] as {
-        key: keyof TableDataProps;
-        label: string;
-        render?: (prop: TableDataProps) => ReactNode;
-        customRender?: () => ReactNode;
-        format?: (value: string) => string;
-    }[],
+    ],
     license_history_list: [
         {
-            key: "id", label: "Sr. No", render: (props: TableDataProps, index: number) => {
+            key: "id", label: "Sr. No", render: (props: TableDataProps, index: number, page: number) => {
+                const value = (page - 1) * 10 + index + 1
                 return (
-                    <span>{index + 1}</span>
+                    <span>{value}</span>
                 )
             }
         },
@@ -88,13 +85,7 @@ export const tableColumn = {
                 )
             }
         }
-    ] as {
-        key: keyof TableDataProps;
-        label: string;
-        render?: (prop: TableDataProps) => ReactNode;
-        customRender?: () => ReactNode;
-        format?: (value: string) => string;
-    }[],
+    ],
     students_list: [
         {
             key: FIELD_PARAMS.ROLE_ID, label: "Student ID", render: (props: TableDataProps) => {
@@ -111,11 +102,19 @@ export const tableColumn = {
             },
         },
         { key: FIELD_PARAMS.CREATED_AT, label: "Enrollment Date", format: (value: string) => format(new Date(value), "yyyy-MM-dd") },
-        { key: FIELD_PARAMS.LICENSE_NUMBER, label: "License Number", render(prop) {
-            return (
-                <span>{prop[FIELD_PARAMS.LICENSE_NUMBER] ? prop[FIELD_PARAMS.LICENSE_NUMBER] : "-"}</span>
-            )
-        }, },
+        {
+            key: FIELD_PARAMS.LICENSE_NUMBER, label: "License Number", render(prop) {
+                return (
+                    prop[FIELD_PARAMS.LICENSE_NUMBER] ?
+                        <div className="flex">
+                            <p className="truncate w-40">
+                                {prop[FIELD_PARAMS.LICENSE_NUMBER]}
+                            </p>
+                            <Copy size={14} className="cursor-pointer" onClick={() => copyToClipboard(prop[FIELD_PARAMS.LICENSE_NUMBER])} />
+                        </div> : "-"
+                )
+            },
+        },
         {
             key: "status", label: "Status", render: (props: TableDataProps) => {
                 return (
@@ -132,22 +131,29 @@ export const tableColumn = {
                 )
             }
         }
-    ] as {
-        key: keyof TableDataProps;
-        label: string;
-        render?: (prop: TableDataProps) => ReactNode;
-        customRender?: () => ReactNode;
-        format?: (value: string) => string;
-    }[],
+    ],
     license_list: [
         {
-            key: "id", label: "Sr. No", render: (props: TableDataProps, index: number) => {
+            key: "id", label: "Sr. No", render: (props: TableDataProps, index: number, page: number) => {
+                const value = (page - 1) * 10 + index + 1
                 return (
-                    <span>{index + 1}</span>
+                    <span>{value}</span>
                 )
             }
         },
-        { key: FIELD_PARAMS.LICENSE_KEY, label: "License Number" },
+        {
+            key: FIELD_PARAMS.LICENSE_KEY, label: "License Number", render(prop) {
+                return (
+                    prop[FIELD_PARAMS.LICENSE_KEY] ?
+                        <div className="flex">
+                            <p className="truncate w-40">
+                                {prop[FIELD_PARAMS.LICENSE_KEY]}
+                            </p>
+                            <Copy size={14} className="cursor-pointer" onClick={() => copyToClipboard(prop[FIELD_PARAMS.LICENSE_KEY])} />
+                        </div> : "-"
+                )
+            },
+        },
         {
             key: FIELD_PARAMS.EXPIRY_DATE,
             label: "Valid Till",
@@ -163,19 +169,9 @@ export const tableColumn = {
                 )
             }
         }
-    ] as {
-        key: keyof TableDataProps;
-        label: string;
-        render?: (prop: TableDataProps) => ReactNode;
-        customRender?: () => ReactNode;
-        format?: (value: string) => string;
-    }[],
+    ],
     seed_list: [
         { key: FIELD_PARAMS.SEED_NUMBER, label: "Seed number" },
         { key: FIELD_PARAMS.CREATED_AT, label: "Created Date", format: (value: string) => format(new Date(value), "yyyy-MM-dd") },
-    ] as {
-        key: keyof TableDataProps;
-        label: string;
-        format?: (value: string) => string;
-    }[],
+    ],
 };

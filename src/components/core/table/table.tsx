@@ -21,6 +21,7 @@ const DataTable = ({ data, role, url, isPagination = false, query = {} }: TableP
     const [record, setRecord] = useState({ data: [], pages: 0 });
     const columns = tableColumn[role as keyof typeof tableColumn];
     const { filters } = useFilterContext();
+    const {page = 1} = filters;
     const { toast } = useToast()
     useEffect(() => {
         if (Object.keys(filters).length > 0) {
@@ -72,7 +73,7 @@ const DataTable = ({ data, role, url, isPagination = false, query = {} }: TableP
                                     <TableCell key={column.key}>
                                         {column.format ? (column.format(item[column.key] as string)) :
                                             column.customRender ? column.customRender() :
-                                                column.render ? column.render(item, i) :
+                                                column.render ? column.render(item, i,page) :
                                                     item[column.key]
                                         }
                                     </TableCell>
