@@ -9,5 +9,5 @@ export const copyToClipboard = (text: string) => navigator.clipboard.writeText(t
 
 export function formatToTwoDecimals(number) {
   const num = Number(number);
-  return Number.isInteger(num) ? num : num.toFixed(2);
+  return Number.isInteger(num) ? num : parseFloat(num.toFixed(2));
 }

@@ -127,7 +127,7 @@ const StudentReport = ({
             label="Tons Per Day"
             value={`${formatToTwoDecimals(reportData?.dailyTonsMined)}T`}
           />
-          <InfoItem label="Stripping Ration" value="2.5" />
+          <InfoItem label="Stripping Ration" value={`${formatToTwoDecimals(reportData?.stripping_ratio)}`} />
         </Grid>
       </Section>
 

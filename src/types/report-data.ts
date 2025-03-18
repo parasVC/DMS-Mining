@@ -19,5 +19,6 @@ export interface ReportFieldProps {
         totalRevenue: number,
         operatingBudget: number,
         last_login:string,
-        totalWasteTonsMined: number
+        totalWasteTonsMined: number,
+        stripping_ratio: number
 }
