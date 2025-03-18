@@ -5,6 +5,7 @@ import { Calendar, Download } from "lucide-react";
 import { ReportFieldProps } from "@/types/report-data";
 import { useBreadcrumb } from "@/context/breadcrumb-context";
 import { Button } from "@/components/ui/button";
+import { formatToTwoDecimals } from "@/lib/utils";
 
 interface ReportDataProps {
   reportData: ReportFieldProps;
@@ -59,7 +60,7 @@ const StudentReport = ({
         <div>
           <p className="text-sm text-blue-600 font-semibold">Profit Margin</p>
           <p className="text-2xl font-semibold">
-            $ {reportData?.profit_margin}
+            $ {formatToTwoDecimals(reportData?.profit_margin)}
           </p>
         </div>
         <div>
@@ -67,7 +68,7 @@ const StudentReport = ({
             Efficiency Ratio (Revenue/Cost)
           </p>
           <p className="text-2xl font-semibold">
-            {reportData?.efficiency_ratio}x
+            {formatToTwoDecimals(reportData.efficiency_ratio)}
           </p>
         </div>
       </div>
@@ -77,21 +78,21 @@ const StudentReport = ({
         <Grid>
           <InfoItem
             label="Waste Mined"
-            value={`${reportData?.totalWasteTonsMined}T`}
+            value={`${formatToTwoDecimals(reportData?.totalWasteTonsMined)}T`}
           />
           <InfoItem
             label="Low Grade (LG) Ore Mined"
-            value={`${reportData?.minedLg}T`}
+            value={`${formatToTwoDecimals(reportData?.minedLg)}T`}
           />
           <InfoItem
             label="Medium Grade (MG) Ore Mined"
-            value={`${reportData?.minedMg}T`}
+            value={`${formatToTwoDecimals(reportData?.minedMg)}T`}
           />
           <InfoItem label="Total T&C Waste" value="2500T" />
-          <InfoItem label="Total Ore" value={`${reportData?.totalOreGrade}T`} />
+          <InfoItem label="Total Ore" value={`${formatToTwoDecimals(reportData?.totalOreGrade)}T`} />
           <InfoItem
             label="Overall Grade"
-            value={`${reportData?.overallGrade}%`}
+            value={`${formatToTwoDecimals(reportData?.overallGrade)}%`}
           />
         </Grid>
       </Section>
@@ -100,31 +101,31 @@ const StudentReport = ({
         <Grid>
           <InfoItem
             label="Waste Mined"
-            value={`$ ${reportData?.wasteMiningCost}`}
+            value={`$ ${formatToTwoDecimals(reportData?.wasteMiningCost)}`}
           />
           <InfoItem
             label="Total Ore Mining"
-            value={`$ ${reportData?.totalOreMiningCost}`}
+            value={`$ ${formatToTwoDecimals(reportData?.totalOreMiningCost)}`}
           />
           <InfoItem
             label="Total Drilling"
-            value={`$ ${reportData?.totalDrillingCost}`}
+            value={`$ ${formatToTwoDecimals(reportData?.totalDrillingCost)}`}
           />
           <InfoItem
             label="Total Blasting"
-            value={`$ ${reportData?.totalBlastingCost}`}
+            value={`$ ${formatToTwoDecimals(reportData?.totalBlastingCost)}`}
           />
           <InfoItem
             label="Total Load & Haul"
-            value={`$ ${reportData?.totalLoadHaulCost}`}
+            value={`$ ${formatToTwoDecimals(reportData?.totalLoadHaulCost)}`}
           />
           <InfoItem
             label="Cost Per Ton"
-            value={`$ ${reportData?.costPerTon}`}
+            value={`$ ${formatToTwoDecimals(reportData?.costPerTon)}`}
           />
           <InfoItem
             label="Tons Per Day"
-            value={`${reportData?.dailyTonsMined}T`}
+            value={`${formatToTwoDecimals(reportData?.dailyTonsMined)}T`}
           />
           <InfoItem label="Stripping Ration" value="2.5" />
         </Grid>
@@ -134,25 +135,25 @@ const StudentReport = ({
         <Grid>
           <InfoItem
             label="Exploration Drilling Length"
-            value={`${reportData?.totalDrillingLengthMeters}m`}
+            value={`${formatToTwoDecimals(reportData?.totalDrillingLengthMeters)}m`}
           />
           <InfoItem
             label="Exploration Cost"
-            value={`$ ${reportData?.explorationCost}`}
+            value={`$ ${formatToTwoDecimals(reportData?.explorationCost)}`}
           />
         </Grid>
       </Section>
 
       <Section title="Financial Summary">
         <Grid>
-          <InfoItem label="Total Cost" value={`$ ${reportData?.totalCost}`} />
+          <InfoItem label="Total Cost" value={`$ ${formatToTwoDecimals(reportData?.totalCost)}`} />
           <InfoItem
             label="Total Revenue"
-            value={`$ ${reportData?.totalRevenue}`}
+            value={`$ ${formatToTwoDecimals(reportData?.totalRevenue)}`}
           />
           <InfoItem
             label="Operational Budget"
-            value={`$ ${reportData?.operatingBudget}`}
+            value={`$ ${formatToTwoDecimals(reportData?.operatingBudget)}`}
           />
         </Grid>
       </Section>

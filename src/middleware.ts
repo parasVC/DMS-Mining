@@ -22,8 +22,8 @@ export async function middleware(req: NextRequest) {
   // };
   //change route to dashboard when it will ready
   const dashboardRoutes: Record<string, string> = {
-    admin: "/admin/universities",
-    client: "/university/students",
+    admin: "/admin/dashboard",
+    client: "/university/dashboard",
   };
 
   const userDashboard = dashboardRoutes[role] || "/";

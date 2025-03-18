@@ -157,7 +157,7 @@ export const tableColumn = {
       render(prop) {
         return prop[FIELD_PARAMS.LICENSE_NUMBER] ? (
           <div className="flex">
-            <p className="truncate w-40">{prop[FIELD_PARAMS.LICENSE_NUMBER]}</p>
+            <p className="truncate w-auto pr-2">{prop[FIELD_PARAMS.LICENSE_NUMBER]}</p>
             <CopyToClipboardButton
               textToCopy={prop[FIELD_PARAMS.LICENSE_NUMBER]}
             />
@@ -205,7 +205,7 @@ export const tableColumn = {
       render(prop) {
         return prop[FIELD_PARAMS.LICENSE_KEY] ? (
           <div className="flex">
-            <p className="truncate w-40">{prop[FIELD_PARAMS.LICENSE_KEY]}</p>
+            <p className="truncate w-auto pr-2">{prop[FIELD_PARAMS.LICENSE_KEY]}</p>
             <CopyToClipboardButton
               textToCopy={prop[FIELD_PARAMS.LICENSE_KEY]}
             />

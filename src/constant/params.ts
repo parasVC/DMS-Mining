@@ -23,7 +23,10 @@ export const FIELD_PARAMS = {
   IS_ASSIGNED : "is_assigned",
   LICENSE_KEY : "license_key",
   LICENSE_STATUS: "license_status",
-
+  TOTAL_UNIVERSITIES:"total_universities", 
+  ASSIGNED_LICENSES: "assigned_licenses",
+  UNASSIGNED_LICENSES: "unassigned_licenses",
+  TOTAL_SEEDS:"total_seeds"
 } as const;
 
 // type FieldParamsType = keyof typeof FIELD_PARAMS;

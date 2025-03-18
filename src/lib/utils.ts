@@ -6,3 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const copyToClipboard = (text: string) => navigator.clipboard.writeText(text)  
+
+export function formatToTwoDecimals(number) {
+  const num = Number(number);
+  return Number.isInteger(num) ? num : num.toFixed(2);
+}

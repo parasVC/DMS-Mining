@@ -1,11 +1,34 @@
-import React from 'react'
+import DashboardPage from '@/components/core/dashboard/dashboard'
+import { fetchData } from '@/lib/request/fetch-data';
+import React from 'react';
+import axios from "axios";
+import { redirect } from 'next/navigation';
 
 
-const Dashboard = () => {
+export default async function dashboard(){
   
+  let res;
+  try {
+    res = await fetchData({
+      url: "auth/admin/dashboard",
+      method: "GET",
+      token: true
+    })
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      if (error.response.status === 401) {
+        redirect("/auth/login");
+      } else if (error.response.data) {
+        throw new Error(error.response.data.message || "Something went wrong");
+      } else {
+        throw new Error(error.message || "Something went wrong");
+      }
+    } else {
+      throw new Error(error.message || "Something went wrong");
+    }
+  }
+
   return (
-    <div>Dashboard</div>
+    <div><DashboardPage data={res.data} role='admin'/></div>
   )
 }
-
-export default Dashboard
