@@ -1,33 +1,51 @@
-'use client'
+"use client";
 import React, { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar } from "lucide-react";
+import { Calendar, Download } from "lucide-react";
 import { ReportFieldProps } from "@/types/report-data";
 import { useBreadcrumb } from "@/context/breadcrumb-context";
-
+import { Button } from "@/components/ui/button";
 
 interface ReportDataProps {
   reportData: ReportFieldProps;
   seed_id: string;
-  student_name :string;
-  user_id : number;
+  student_name: string;
+  user_id: number;
 }
 
-const StudentReport = ({ reportData, seed_id, student_name, user_id }: ReportDataProps) => {
-  
-  
+const StudentReport = ({
+  reportData,
+  seed_id,
+  student_name,
+  user_id,
+}: ReportDataProps) => {
   const { setBreadcrumbs } = useBreadcrumb();
+
   useEffect(() => {
-          setBreadcrumbs([
-              { label: "Students", href: "/university/students" },
-              { label: `${student_name}`, href: `/university/students/view/${user_id}` },
-              { label: "Report", href: "#" },
-          ]);
-      }, [setBreadcrumbs]);
+    setBreadcrumbs([
+      { label: "Students", href: "/university/students" },
+      {
+        label: `${student_name}`,
+        href: `/university/students/view/${user_id}`,
+      },
+      { label: "Report", href: "#" },
+    ]);
+  }, [setBreadcrumbs]);
+
   return (
     <div className="w-full">
+      <div className="text-right">
+        <Button
+          className="p-3"
+          variant={"outline"}
+          onClick={() => alert("File downloaded")}
+        >
+          <Download />
+          <span className="text-sm">Download</span>
+        </Button>
+      </div>
       {/* Header */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center my-3">
         <h1 className="text-3xl font-bold">{seed_id}</h1>
         <div className="flex items-center gap-2 text-gray-500">
           <Calendar size={16} />
@@ -57,7 +75,10 @@ const StudentReport = ({ reportData, seed_id, student_name, user_id }: ReportDat
       {/* Sections */}
       <Section title="Production Summary">
         <Grid>
-          <InfoItem label="Waste Mined" value={`${reportData?.totalWasteTonsMined}T`} />
+          <InfoItem
+            label="Waste Mined"
+            value={`${reportData?.totalWasteTonsMined}T`}
+          />
           <InfoItem
             label="Low Grade (LG) Ore Mined"
             value={`${reportData?.minedLg}T`}

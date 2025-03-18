@@ -11,9 +11,9 @@ export default async function TablePage({ searchParams }: any) {
   const perPage = per_page ? Number(per_page) : 10;
   const pageVal = page ? Number(page) : 1;
   const statusVal = status ? status : "";
-  const createdAt = created_at ? created_at : ""
-  const studentName = student_name ? student_name : ""
-  const licenseNumber = license_number ? license_number : ""
+  const createdAt = created_at ? created_at : "";
+  const studentName = student_name ? student_name : "";
+  const licenseNumber = license_number ? license_number : "";
   let res;
   try {
     res = await fetchData({
@@ -22,16 +22,19 @@ export default async function TablePage({ searchParams }: any) {
       token: true,
     });
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      if (error.response.status === 401) {
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status;
+      const message = error.response?.data?.message || error.message;
+
+      if (status === 401) {
         redirect("/auth/login");
-      } else if (error.response.data) {
-        throw new Error(error.response.data.message || "Something went wrong");
       } else {
-        throw new Error(error.message || "Something went wrong");
+        throw new Error(message || "Something went wrong");
       }
     } else {
-      throw new Error(error.message || "Something went wrong");
+      throw new Error(
+        error instanceof Error ? error.message : "Unknown error occurred"
+      );
     }
   }
 

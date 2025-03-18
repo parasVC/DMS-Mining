@@ -7,16 +7,17 @@ import { fetchData } from "@/lib/request/fetch-data";
 export default async function report({ searchParams }: any) {
   const { seed_id, user_id, student_name } = await searchParams;
 
-  if (!seed_id || !user_id) { throw new Error("seed number is required") };
+  if (!seed_id || !user_id) {
+    throw new Error("seed number is required");
+  }
 
   let res;
   try {
     res = await fetchData({
       url: `seed/selected/player/progress?seed_id=${seed_id}&&user_id=${user_id}`,
       method: "GET",
-      token: true
-    })
-
+      token: true,
+    });
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       if (error.response.status === 401) {
@@ -31,8 +32,11 @@ export default async function report({ searchParams }: any) {
     }
   }
   return (
-    <StudentReport reportData={res.data} seed_id={seed_id} student_name={student_name} user_id={user_id} />
+    <StudentReport
+      reportData={res.data}
+      seed_id={seed_id}
+      student_name={student_name}
+      user_id={user_id}
+    />
   );
 }
-
-
