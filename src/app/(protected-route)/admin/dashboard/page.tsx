@@ -1,19 +1,18 @@
-import DashboardPage from '@/components/core/dashboard/dashboard'
-import { fetchData } from '@/lib/request/fetch-data';
-import React from 'react';
+import DashboardPage from "@/components/core/dashboard/dashboard";
+import { fetchData } from "@/lib/request/fetch-data";
 import axios from "axios";
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
+export const dynamic = 'force-dynamic';
 
-export default async function dashboard(){
-  
+const Dashboard = async () => {
   let res;
   try {
     res = await fetchData({
-      url: "auth/admin/dashboard",
+      url: `auth/admin/dashboard`,
       method: "GET",
-      token: true
-    })
+      token: true,
+    });
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       if (error.response.status === 401) {
@@ -29,6 +28,10 @@ export default async function dashboard(){
   }
 
   return (
-    <div><DashboardPage data={res.data} role='admin'/></div>
-  )
-}
+    <div>
+      <DashboardPage data={res.data} role="admin" />
+    </div>
+  );
+};
+
+export default Dashboard;
