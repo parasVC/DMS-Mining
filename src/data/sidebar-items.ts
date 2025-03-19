@@ -1,4 +1,4 @@
-import { LucideIcon, Settings, Contact, Bean, Crown, GraduationCap, Lock } from "lucide-react";
+import { LucideIcon, Settings, Contact, Bean, Crown, GraduationCap, Lock, Home } from "lucide-react";
 
 export interface NavSubItem {
   title: string;
@@ -27,9 +27,15 @@ export const sidebarItems = {
       label: "Overview",
       items: [
         {
+          title: "Dashboard",
+          path: "/admin/dashboard",
+          icon: Home
+        },
+        {
           title: "Universities",
           path: "/admin/universities",
           icon: GraduationCap,
+          isActive: false
         }
       ],
     }
@@ -39,6 +45,11 @@ export const sidebarItems = {
       id: 1,
       label: "Overview",
       items: [
+        {
+          title: "Dashboard",
+          path: "/university/dashboard",
+          icon: Home
+        },
         {
           title: "Students",
           path: "/university/students",

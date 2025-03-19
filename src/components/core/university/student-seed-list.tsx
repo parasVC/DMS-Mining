@@ -6,14 +6,12 @@ import {
   CalendarDays,
   CircleChevronRight,
   CircleDollarSign,
-  Download,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Loader from "../loader/loader";
 import { UserFieldProps } from "@/types/user-field";
 import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
 
 interface SeedListProps {
   seed_id: number;
@@ -53,14 +51,6 @@ const StudentSeedList = ({ userData }: UserFieldProps) => {
     <>
       <div className="flex justify-between">
         <div className="text-lg font-semibold">Reports</div>
-        <Button
-          className="p-3"
-          variant={"outline"}
-          onClick={() => alert("File downloaded")}
-        >
-          <Download />
-          <span className="text-sm">Download</span>
-        </Button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {seedList.length > 0 ? (

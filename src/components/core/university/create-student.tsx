@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Download,
   LoaderCircle,
   PlusCircle,
   TriangleAlert,
@@ -64,14 +63,6 @@ export default function AddSingleUserForm({
 
   return (
     <>
-      <Button
-        className="p-3"
-        variant={"outline"}
-        onClick={() => alert("File downloaded")}
-      >
-        <Download />
-        <span className="text-sm">Download</span>
-      </Button>
       <Popup
         open={isOpen}
         onOpenChange={setIsOpen}
@@ -197,9 +188,8 @@ export default function AddSingleUserForm({
                             <Button
                               type="button"
                               variant={"outline"}
-                              className={`${
-                                !field.value ? "border-primary" : ""
-                              } px-4 py-2`}
+                              className={`${!field.value ? "border-primary" : ""
+                                } px-4 py-2`}
                               onClick={() => field.onChange(false)}
                             >
                               No
@@ -207,9 +197,8 @@ export default function AddSingleUserForm({
                             <Button
                               type="button"
                               variant={"outline"}
-                              className={`${
-                                field.value ? "border-primary" : ""
-                              } px-4 py-2`}
+                              className={`${field.value ? "border-primary" : ""
+                                } px-4 py-2`}
                               onClick={() => field.onChange(true)}
                             >
                               Yes

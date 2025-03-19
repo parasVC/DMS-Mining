@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Download } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { ReportFieldProps } from "@/types/report-data";
 import { useBreadcrumb } from "@/context/breadcrumb-context";
-import { Button } from "@/components/ui/button";
 import { formatToTwoDecimals } from "@/lib/utils";
+import DownloadFile from "../download";
 
 interface ReportDataProps {
   reportData: ReportFieldProps;
@@ -21,6 +21,10 @@ const StudentReport = ({
   user_id,
 }: ReportDataProps) => {
   const { setBreadcrumbs } = useBreadcrumb();
+  const queryParams = {
+    "seed_id": Number(seed_id),
+    "student_id":user_id
+  }
 
   useEffect(() => {
     setBreadcrumbs([
@@ -36,14 +40,7 @@ const StudentReport = ({
   return (
     <div className="w-full">
       <div className="text-right">
-        <Button
-          className="p-3"
-          variant={"outline"}
-          onClick={() => alert("File downloaded")}
-        >
-          <Download />
-          <span className="text-sm">Download</span>
-        </Button>
+        <DownloadFile url="seed/download/report/pdf" params={queryParams} />
       </div>
       {/* Header */}
       <div className="flex justify-between items-center my-3">
