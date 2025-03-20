@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import SeedListTable from "@/components/core/university/seed-list-table";
 import { fetchData } from "@/lib/request/fetch-data";
 import axios from "axios";
@@ -5,7 +6,7 @@ import { redirect } from "next/navigation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default async function SeedPage({ searchParams }: any) {
-
+  const session = await auth();
   const { per_page, page } = await searchParams;
 
   const perPage = per_page ? Number(per_page) : 10;
@@ -32,5 +33,5 @@ export default async function SeedPage({ searchParams }: any) {
     }
   }
 
-  return <SeedListTable data={res.data} url={"seed/list/pagination"} />;
+  return <SeedListTable data={res.data} url={"seed/list/pagination"} sessionData={session} />;
 }

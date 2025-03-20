@@ -25,11 +25,11 @@ export default function DashboardPage({ data, role }: DashboardComponentProps) {
             {columns.length > 0 ? (columns.map((value) => (
                 <Card key={value.dataFields.join("-")} className="flex flex-col justify-center items-center p-5 gap-3 rounded-m w-full max-w-[450px] min-h-[200px] text-center">
                     <CardTitle className="text-xl font-medium pt-2">{value.label}</CardTitle>
-                    <CardContent className="text-3xl font-semibold">
+                    <CardContent className="text-3xl font-medium">
                         {value.dataFields
                             .map((key) => data[key])
                             .filter((val) => val !== undefined)
-                            .join(" / ") || "N/A"}
+                            .join(" | ") || "N/A"}
                     </CardContent>
                 </Card>
             ))) : <></>}

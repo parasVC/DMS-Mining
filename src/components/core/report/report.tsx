@@ -22,8 +22,8 @@ const StudentReport = ({
 }: ReportDataProps) => {
   const { setBreadcrumbs } = useBreadcrumb();
   const queryParams = {
-    "seed_id": Number(seed_id),
-    "student_id":user_id
+    seed_id: Number(seed_id),
+    student_id:user_id
   }
 
   useEffect(() => {

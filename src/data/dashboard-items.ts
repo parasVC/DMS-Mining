@@ -18,7 +18,7 @@ export const dashboardData = {
     }[],
     university: [
         { dataFields: [FIELD_PARAMS.TOTAL_STUDENTS], label: "Total Students" },
-        { dataFields: [FIELD_PARAMS.ASSIGNED_LICENSES, FIELD_PARAMS.UNASSIGNED_LICENSES], label: "Assigned / Unassigned License" },
+        { dataFields: [FIELD_PARAMS.ASSIGNED_LICENSES, FIELD_PARAMS.UNASSIGNED_LICENSES], label: "Assigned License | Unassigned License" },
         { dataFields: [FIELD_PARAMS.TOTAL_SEEDS], label: "Total Seeds" },
     ] as {
         dataFields: (keyof DashboardDataProps)[];

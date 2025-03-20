@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "../loader/loader";
 import { UserFieldProps } from "@/types/user-field";
 import { useToast } from "@/hooks/use-toast";
+import DownloadFile from "../download";
 
 interface SeedListProps {
   seed_id: number;
@@ -23,6 +24,9 @@ const StudentSeedList = ({ userData }: UserFieldProps) => {
   const router = useRouter();
   const [seedList, setSeedList] = useState<SeedListProps[]>([]);
   const [isloading, setIsLoading] = useState(false);
+  const queryParams = {
+    student_id : userData.id
+  }
   const fetchSeedList = async () => {
     try {
       setIsLoading(true);
@@ -51,6 +55,9 @@ const StudentSeedList = ({ userData }: UserFieldProps) => {
     <>
       <div className="flex justify-between">
         <div className="text-lg font-semibold">Reports</div>
+        <div className="text-right">
+        <DownloadFile url="seed/selected/download/report" params={queryParams} />
+      </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {seedList.length > 0 ? (

@@ -4,9 +4,8 @@ import Filter from "@/components/core/table/filter";
 import DataTable from "@/components/core/table/table";
 import { useBreadcrumb } from "@/context/breadcrumb-context";
 import { useEffect } from "react";
-import { FilterProvider } from "@/context/filter-context";
-import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { FilterProvider, useFilterContext } from "@/context/filter-context";
+import DownloadFile from "../download";
 
 interface TableComponentProps {
   data: {
@@ -24,28 +23,30 @@ export default function LicenseListTable({ data, url }: TableComponentProps) {
   }, [setBreadcrumbs]);
 
   return (
+    <FilterProvider>
+      <InnerLicenseListTable data={data} url={url} />
+    </FilterProvider>
+  );
+}
+
+
+function InnerLicenseListTable({ data, url }: TableComponentProps) {
+  const { filters } = useFilterContext();
+  const modifiedFilters = {
+    ...Object.fromEntries(Object.entries(filters).map(([key, value]) =>
+      key === "assigned_status" ? ["status", value] : [key, value]
+    ))
+  };
+
+  return (
     <div className="space-y-4">
       <div className="text-right">
-        <Button
-          className="p-3"
-          variant={"outline"}
-          onClick={() => alert("File downloaded")}
-        >
-          <Download />
-          <span className="text-sm">Download</span>
-        </Button>
+        <DownloadFile url="license/download/report" params={modifiedFilters} />
       </div>
-      <FilterProvider>
-        {/*Filter*/}
-        <Filter filterType={"license_list"} />
-        {/* Table */}
-        <DataTable
-          data={data}
-          role={"license_list"}
-          url={url}
-          isPagination={true}
-        />
-      </FilterProvider>
+      {/* Filter */}
+      <Filter filterType={"license_list"} />
+      {/* Table */}
+      <DataTable data={data} role={"license_list"} url={url} isPagination={true} />
     </div>
   );
 }

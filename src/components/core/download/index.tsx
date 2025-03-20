@@ -2,27 +2,25 @@ import { reqeustServer } from '@/actions/reqeust-server-api';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Download } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import React from 'react'
 
 interface ParamsType {
     student_name?: string;
     license_number?: number;
     created_at?: Date;
-    status?:string;
+    status?: string;
     seed_id?: number;
     student_id?: number;
-    page?:number;
-  }
+    page?: number;
+    university_id?: number;
+}
 const DownloadFile = ({ url, params }: { url: string, params: ParamsType }) => {
     const { toast } = useToast();
-    const router = useRouter();
     const queryString = new URLSearchParams(
         Object.fromEntries(
             Object.entries(params).map(([key, value]) => [key, String(value)])
         )
     ).toString();
-    
 
     const downloadFile = async () => {
         const res = await reqeustServer({
@@ -31,17 +29,22 @@ const DownloadFile = ({ url, params }: { url: string, params: ParamsType }) => {
             token: true
         })
         if (res.status === "success") {
+            const fileDownloadUrl = res?.data;
+            const fileResponse = await fetch(fileDownloadUrl);
+            const blob = await fileResponse.blob();
+            const url = window.URL.createObjectURL(blob);
+            const filename = fileDownloadUrl.split("/").pop() || "downloaded-file";
             const link = document.createElement("a");
-            link.href = res.data;
-            link.setAttribute("download", "");
+            link.href = url;
+            link.download = filename;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
             toast({
                 title: "File Downloaded Successfully",
                 description: res.message,
             });
-            router.refresh();
             return;
         } else {
             toast({
@@ -51,6 +54,8 @@ const DownloadFile = ({ url, params }: { url: string, params: ParamsType }) => {
             });
         }
     }
+    
+
 
     const handleDownloadFile = async () => {
         try {
