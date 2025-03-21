@@ -23,9 +23,8 @@ const StudentReport = ({
   const { setBreadcrumbs } = useBreadcrumb();
   const queryParams = {
     seed_id: Number(seed_id),
-    student_id:user_id
+    student_id:Number(user_id)
   }
-
   useEffect(() => {
     setBreadcrumbs([
       { label: "Students", href: "/university/students" },
