@@ -7,10 +7,17 @@ import { FIELD_PARAMS } from "@/constant/params";
 import { UserFieldProps } from "@/types/user-field";
 import { useBreadcrumb } from "@/context/breadcrumb-context";
 
-export default function ViewUniversity({ userData }: UserFieldProps) {
+interface ErrorFieldProps {
+  isError: boolean;
+  msg: string
+}
+
+type ViewUniversityProps = UserFieldProps & ErrorFieldProps;
+export default function ViewUniversity({ userData, isError, msg }: ViewUniversityProps) {
         const { setBreadcrumbs } = useBreadcrumb();
     
       useEffect(() => {
+        if(isError) throw new Error(msg || "Something went wrong");
         setBreadcrumbs([
           { label: "Universities", href: "/admin/universities" },
           { label: `${userData.university_name}`, href: "#" },

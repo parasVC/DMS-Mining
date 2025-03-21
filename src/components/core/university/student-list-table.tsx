@@ -17,19 +17,22 @@ interface TableComponentProps {
     remaining_licenses_count: number;
     total_licenses_count: number;
   };
+  isError: boolean;
+  msg: string
 }
 
 export default function StudentsListTable({
   data,
   details,
-  url
+  url,
+  isError, 
+  msg
 }: TableComponentProps) {
   const { setBreadcrumbs } = useBreadcrumb();
-
   useEffect(() => {
+    if(isError) throw new Error(msg || "Something went wrong");
     setBreadcrumbs([{ label: "Students", href: "#" }]);
   }, [setBreadcrumbs]);
-
 
 
   return (

@@ -5,7 +5,7 @@ export default function Download() {
                 <div style={{ position: "absolute", top: "-50px", left: "-50px", width: "100px", height: "100px", background: "rgba(0, 123, 255, 0.2)", borderRadius: "50%" }}></div>
                 <div style={{ position: "absolute", bottom: "-50px", right: "-50px", width: "100px", height: "100px", background: "rgba(0, 123, 255, 0.2)", borderRadius: "50%" }}></div>
                 <h2 style={{ color: "#333", marginBottom: "10px" }}>DMS Mining</h2>
-                <a href="path/to/your/file.exe" download style={{ display: "inline-block", background: "#007BFF", color: "#fff", padding: "12px 25px", textDecoration: "none", fontSize: "16px", borderRadius: "5px", transition: "0.3s", boxShadow: "0px 3px 10px rgba(0, 123, 255, 0.3)" }}>Download</a>
+                <a href="" download style={{ display: "inline-block", background: "#007BFF", color: "#fff", padding: "12px 25px", textDecoration: "none", fontSize: "16px", borderRadius: "5px", transition: "0.3s", boxShadow: "0px 3px 10px rgba(0, 123, 255, 0.3)" }}>Download</a>
             </div>
         </div>
     );

@@ -15,13 +15,16 @@ interface TableComponentProps {
   url: string
   university_id: number;
   university_name: string
-  query? : object
+  query? : object;
+  isError: boolean;
+  msg: string
 }
 
-export default function LicenseHistoryTable({ data, url,university_id, university_name, query }: TableComponentProps) {
+export default function LicenseHistoryTable({ data, url,university_id, university_name, query ,isError, msg}: TableComponentProps) {
   const { setBreadcrumbs } = useBreadcrumb();
 
   useEffect(() => {
+    if(isError) throw new Error(msg || "Something went wrong");
     setBreadcrumbs([
       { label: "Universities", href: "/admin/universities" },
       { label: university_name, href: "#" },

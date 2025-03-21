@@ -3,11 +3,17 @@ import ProfilePage from "@/components/core/university/view-student";
 import { redirect } from "next/navigation";
 import axios from "axios";
 import { fetchData } from "@/lib/request/fetch-data";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+interface ApiResponse {
+  data: any;
+}
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const page = async ({ params }: any) => {
   const { studentId } = await params;
 
-  let res;
+  let res: ApiResponse = { data: {} };
+  let errorState = { isError: false, msg: "" };
   try {
     res = await fetchData({
       url: `student/retrieve?student_id=${studentId}`,
@@ -15,19 +21,26 @@ const page = async ({ params }: any) => {
       token: true,
     });
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      if (error.response.status === 401) {
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status;
+      const message = error.response?.data?.message || error.message;
+
+      if (status === 401) {
         redirect("/auth/login");
-      } else if (error.response.data) {
-        throw new Error(error.response.data.message || "Something went wrong");
       } else {
-        throw new Error(error.message || "Something went wrong");
+        errorState = {
+          isError: true,
+          msg: message
+        };
       }
     } else {
-      throw new Error(error.message || "Something went wrong");
+      errorState = {
+        isError: true,
+        msg: error instanceof Error ? error.message : "Unknown error occurred",
+      };
     }
   }
-  return <ProfilePage userData={res.data} />;
+  return <ProfilePage userData={res.data} isError={errorState.isError} msg={errorState.msg}/>;
 };
 
 export default page;

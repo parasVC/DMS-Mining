@@ -14,19 +14,24 @@ interface TableComponentProps {
         pages: number
     }
     url: string,
-    sessionData:Session
+    sessionData:Session;
+    isError: boolean;
+  msg: string
 }
 
 export default function SeedListTable({
     data,
     url,
-    sessionData
+    sessionData,
+    isError,
+    msg
 }: TableComponentProps) {
     const { setBreadcrumbs } = useBreadcrumb();
     const queryParams = {
         university_id: Number(sessionData?.id)
     }
     useEffect(() => {
+        if(isError) throw new Error(msg || "Something went wrong");
         setBreadcrumbs([{ label: "Seeds", href: "#" }]);
     }, [setBreadcrumbs]);
 

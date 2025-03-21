@@ -12,6 +12,8 @@ interface ReportDataProps {
   seed_id: string;
   student_name: string;
   user_id: number;
+  isError: boolean;
+  msg: string
 }
 
 const StudentReport = ({
@@ -19,6 +21,8 @@ const StudentReport = ({
   seed_id,
   student_name,
   user_id,
+  isError,
+  msg
 }: ReportDataProps) => {
   const { setBreadcrumbs } = useBreadcrumb();
   const queryParams = {
@@ -26,6 +30,7 @@ const StudentReport = ({
     student_id:Number(user_id)
   }
   useEffect(() => {
+    if(isError) throw new Error(msg || "Something went wrong");
     setBreadcrumbs([
       { label: "Students", href: "/university/students" },
       {

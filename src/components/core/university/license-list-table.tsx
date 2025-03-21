@@ -13,12 +13,23 @@ interface TableComponentProps {
     pages: number;
   };
   url: string;
+  isError: boolean;
+  msg: string
 }
 
-export default function LicenseListTable({ data, url }: TableComponentProps) {
+interface LicenseComponentProps {
+  data: {
+    data: TableDataProps[];
+    pages: number;
+  };
+  url: string;
+}
+
+export default function LicenseListTable({ data, url ,isError,msg}: TableComponentProps) {
   const { setBreadcrumbs } = useBreadcrumb();
 
   useEffect(() => {
+    if(isError) throw new Error(msg || "Something went wrong");
     setBreadcrumbs([{ label: "Licenses", href: "#" }]);
   }, [setBreadcrumbs]);
 
@@ -30,7 +41,7 @@ export default function LicenseListTable({ data, url }: TableComponentProps) {
 }
 
 
-function InnerLicenseListTable({ data, url }: TableComponentProps) {
+function InnerLicenseListTable({ data, url }: LicenseComponentProps) {
   const { filters } = useFilterContext();
   const modifiedFilters = {
     ...Object.fromEntries(Object.entries(filters).map(([key, value]) =>

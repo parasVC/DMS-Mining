@@ -4,6 +4,11 @@ import axios from "axios";
 import { redirect } from "next/navigation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+interface ApiResponse {
+  data: any;
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default async function TablePage({ searchParams }: any) {
   const { per_page, page, status, student_name, created_at, license_number } =
     await searchParams;
@@ -14,7 +19,8 @@ export default async function TablePage({ searchParams }: any) {
   const createdAt = created_at ? created_at : "";
   const studentName = student_name ? student_name : "";
   const licenseNumber = license_number ? license_number : "";
-  let res;
+  let res: ApiResponse = { data: {} };
+  let errorState = { isError: false, msg: "" };
   try {
     res = await fetchData({
       url: `student/list/data?page=${pageVal}&&per_page=${perPage}&status=${statusVal}&created_at=${createdAt}&student_name=${studentName}&license_number=${licenseNumber}`,
@@ -29,12 +35,16 @@ export default async function TablePage({ searchParams }: any) {
       if (status === 401) {
         redirect("/auth/login");
       } else {
-        throw new Error(message || "Something went wrong");
+        errorState = {
+          isError: true,
+          msg: message
+        };
       }
     } else {
-      throw new Error(
-        error instanceof Error ? error.message : "Unknown error occurred"
-      );
+      errorState = {
+        isError: true,
+        msg: error instanceof Error ? error.message : "Unknown error occurred",
+      };
     }
   }
 
@@ -43,6 +53,8 @@ export default async function TablePage({ searchParams }: any) {
       data={res.data}
       details={res.data}
       url={"student/list/data"}
+      isError={errorState.isError}
+      msg={errorState.msg}
     />
   );
 }

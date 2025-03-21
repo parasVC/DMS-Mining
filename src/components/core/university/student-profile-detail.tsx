@@ -15,7 +15,13 @@ import { Button } from '@/components/ui/button'
 import Popup from '@/components/core/popup'
 import { useUniversityActions } from '@/hooks/use-university-action'
 
-const StudentProfileDetail = ({ userData }: UserFieldProps) => {
+interface ErrorFieldProps {
+    isError: boolean;
+    msg: string
+  }
+  
+  type StudentProfileProps = UserFieldProps & ErrorFieldProps;
+const StudentProfileDetail = ({ userData,isError, msg }: StudentProfileProps) => {
     const [isOpen, setIsOpen] = React.useState(false)
     const { assignLicense, removeLicense } = useUniversityActions()
     const capitalize = (name) => name.charAt(0).toUpperCase() + name.slice(1);
@@ -27,6 +33,7 @@ const StudentProfileDetail = ({ userData }: UserFieldProps) => {
     const { setBreadcrumbs } = useBreadcrumb();
 
     useEffect(() => {
+        if(isError) throw new Error(msg || "Something went wrong");
         setBreadcrumbs([
             { label: "Students", href: "/university/students" },
             { label: `${studentName}`, href: "#" },

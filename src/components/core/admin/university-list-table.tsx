@@ -14,12 +14,15 @@ interface TableComponentProps {
     pages: number;
   };
   url: string;
+  isError: boolean;
+  msg: string
 }
 
-export default function UniversityListTable({ data, url }: TableComponentProps) {
+export default function UniversityListTable({ data, url ,isError, msg}: TableComponentProps) {
     const { setBreadcrumbs } = useBreadcrumb();
 
     useEffect(() => {
+        if(isError) throw new Error(msg || "Something went wrong");
         setBreadcrumbs([
             { label: "Universities", href: "#" },
         ]);

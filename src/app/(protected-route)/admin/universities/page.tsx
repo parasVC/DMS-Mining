@@ -4,6 +4,11 @@ import { fetchData } from "@/lib/request/fetch-data";
 import axios from "axios";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+interface ApiResponse {
+    data: any;
+  }
+  
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default async function TablePage({ searchParams }: any) {
     const { per_page, page, status, university_name, created_at } = await searchParams
 
@@ -12,7 +17,8 @@ export default async function TablePage({ searchParams }: any) {
     const statusVal = status ? status : "";
     const universityName = university_name ? university_name : "";
     const createdAt = created_at ? created_at : "";
-    let res;
+    let res: ApiResponse = { data: {} };
+    let errorState = { isError: false, msg: "" };
     try {
         res = await fetchData({
             url: `client/list/data?page=${pageVal}&per_page=${perPage}&status=${statusVal}&created_at=${createdAt}&university_name=${universityName}`,
@@ -20,21 +26,30 @@ export default async function TablePage({ searchParams }: any) {
             token: true
         })
     } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            if ( error.response.status === 401) {
-                redirect("/auth/login");
-            } else if (error.response.data) {
-                throw new Error(error.response.data.message || "Something went wrong");
+        if (axios.isAxiosError(error)) {
+            const status = error.response?.status;
+            const message = error.response?.data?.message || error.message;
+      
+            if (status === 401) {
+              redirect("/auth/login");
             } else {
-                throw new Error(error.message || "Something went wrong");
+              errorState = {
+                isError: true,
+                msg: message
+              };
             }
-        } else {
-            throw new Error(error.message || "Something went wrong");
-        }
+          } else {
+            errorState = {
+              isError: true,
+              msg: error instanceof Error ? error.message : "Unknown error occurred",
+            };
+          }
     }
 
     return <UniversityListTable
         data={res.data}
        url="client/list/data"
+       isError={errorState.isError}
+      msg={errorState.msg}
     />;
 }

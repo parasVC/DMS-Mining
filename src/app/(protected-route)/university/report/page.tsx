@@ -4,6 +4,11 @@ import axios from "axios";
 import { fetchData } from "@/lib/request/fetch-data";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+interface ApiResponse {
+  data: any;
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default async function report({ searchParams }: any) {
   const { seed_id, user_id, student_name } = await searchParams;
 
@@ -11,7 +16,8 @@ export default async function report({ searchParams }: any) {
     throw new Error("seed number is required");
   }
 
-  let res;
+  let res: ApiResponse = { data: {} };
+  let errorState = { isError: false, msg: "" };
   try {
     res = await fetchData({
       url: `seed/selected/player/progress?seed_id=${seed_id}&&user_id=${user_id}`,
@@ -19,16 +25,23 @@ export default async function report({ searchParams }: any) {
       token: true,
     });
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      if (error.response.status === 401) {
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status;
+      const message = error.response?.data?.message || error.message;
+
+      if (status === 401) {
         redirect("/auth/login");
-      } else if (error.response.data) {
-        throw new Error(error.response.data.message || "Something went wrong");
       } else {
-        throw new Error(error.message || "Something went wrong");
+        errorState = {
+          isError: true,
+          msg: message
+        };
       }
     } else {
-      throw new Error(error.message || "Something went wrong");
+      errorState = {
+        isError: true,
+        msg: error instanceof Error ? error.message : "Unknown error occurred",
+      };
     }
   }
   return (
@@ -37,6 +50,8 @@ export default async function report({ searchParams }: any) {
       seed_id={seed_id}
       student_name={student_name}
       user_id={user_id}
+      isError={errorState.isError}
+      msg={errorState.msg}
     />
   );
 }

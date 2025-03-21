@@ -6,15 +6,18 @@ import { useEffect } from 'react';
 
 interface DashboardComponentProps {
     data: DashboardDataProps;
-    role: string
+    role: string,
+    isError: boolean,
+    msg: string
 }
 
-export default function DashboardPage({ data, role }: DashboardComponentProps) {
+export default function DashboardPage({ data, role,isError, msg }: DashboardComponentProps) {
     const columns = dashboardData[role as keyof typeof dashboardData];
 
     const { setBreadcrumbs } = useBreadcrumb();
 
     useEffect(() => {
+        if(isError) throw new Error(msg || "Something went wrong");
         setBreadcrumbs([
             { label: "Dashboard", href: "#" },
         ]);
