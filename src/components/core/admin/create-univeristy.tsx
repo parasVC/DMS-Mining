@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Download, LoaderCircle, PlusCircle } from "lucide-react";
+import { LoaderCircle, PlusCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -56,14 +56,6 @@ export default function CreateUniversityForm({
 
   return (
     <>
-      <Button
-        className="p-3"
-        variant={"outline"}
-        onClick={() => alert("File downloaded")}
-      >
-        <Download />
-        <span className="text-sm">Download</span>
-      </Button>
       <Popup
         open={isOpen}
         onOpenChange={setIsOpen}

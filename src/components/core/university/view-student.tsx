@@ -10,7 +10,7 @@ interface ErrorFieldProps {
 type ProfilePageProps = UserFieldProps & ErrorFieldProps;
 export default function ProfilePage({ userData,isError, msg  }: ProfilePageProps) {
     return (
-        <div className="py-6 px-2 min-h-screen flex justify-center">
+        <div className="py-6 px-2">
             <div className="w-full max-w-10xl space-y-6">
                 {/* Profile Card */}
                 <StudentProfileDetail userData={userData} isError={isError} msg={msg} />

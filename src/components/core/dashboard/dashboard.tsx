@@ -27,30 +27,36 @@ export default function DashboardPage({ data, role, isError, msg }: DashboardCom
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-[150px] w-full justify-items-center">
             {columns.length > 0 ? (columns.map((value) => (
-                <Card key={value.dataFields.join("-")} className="flex flex-col justify-center items-center p-5 gap-3 rounded-m w-full max-w-[450px] min-h-[200px] text-center">
+                <Card key={value.dataFields.join("-")} className="flex flex-col justify-center items-center px-5 gap-3 rounded-m w-full max-w-[450px] min-h-[200px] text-center">
                     {value.dataFields.length === 2 && value.dataFields.includes(FIELD_PARAMS.ASSIGNED_LICENSES) ? (
-                        <>
-                            <CardTitle className="w-full flex items-center text-xl font-medium pt-2">
-                                <span className="w-[45%] text-right">Assigned</span>
-                                <span className="w-[10%] text-center">|</span>
-                                <span className="w-[45%] text-left">Unassigned</span>
-                            </CardTitle>
-                            <CardContent className="w-full flex items-center text-3xl font-semibold">
-                                <span className="w-[45%] text-center">{data[FIELD_PARAMS.ASSIGNED_LICENSES] || "N/A"}</span>
-                                <span className="w-[10%] text-center">|</span>
-                                <span className="w-[45%] text-left">{data[FIELD_PARAMS.UNASSIGNED_LICENSES] || "N/A"}</span>
-                            </CardContent>
-                        </>
+                        <div className="w-full h-full flex justify-center items-stretch">
+                            <div className="w-1/2 flex flex-col justify-center items-center gap-1 md:gap-0 border-r border-black-900">
+                                <CardTitle className="text-xl md:text-base lg:text-xl font-medium break-words w-full">
+                                    Assigned
+                                </CardTitle>
+                                <CardContent className="text-3xl md:text-2xl lg:text-3xl font-semibold p-0">
+                                    {data[FIELD_PARAMS.ASSIGNED_LICENSES] || "N/A"}
+                                </CardContent>
+                            </div>
+                            <div className="w-1/2 flex flex-col justify-center items-center gap-1 md:gap-0">
+                                <CardTitle className="text-xl md:text-base lg:text-xl font-medium break-words w-full">
+                                    Unassigned
+                                </CardTitle>
+                                <CardContent className="text-3xl md:text-2xl lg:text-3xl font-semibold p-0">
+                                    {data[FIELD_PARAMS.UNASSIGNED_LICENSES] || "N/A"}
+                                </CardContent>
+                            </div>
+                        </div>
                     ) : (
-                        <>
-                            <CardTitle className="text-xl font-medium pt-2">{value.label}</CardTitle>
-                            <CardContent className="text-3xl font-semibold mr-[9px]">
+                        <div className="w-full h-full flex flex-col justify-center items-center gap-1 md:gap-0">
+                            <CardTitle className="text-xl md:text-lg lg:text-xl font-medium">{value.label}</CardTitle>
+                            <CardContent className="text-3xl md:text-2xl lg:text-3xl font-semibold p-0">
                                 {value.dataFields
                                     .map((key) => data[key])
                                     .filter((val) => val !== undefined)
                                     .join(" | ") || "N/A"}
                             </CardContent>
-                        </>
+                        </div>
                     )}
                 </Card>
             ))) : <></>}
