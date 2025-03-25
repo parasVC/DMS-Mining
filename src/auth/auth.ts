@@ -1,6 +1,7 @@
 import { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { fetchData } from "@/lib/request/fetch-data";
+import { setAuthError } from "@/actions/auth-error";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const options: NextAuthConfig = {
@@ -14,14 +15,21 @@ export const options: NextAuthConfig = {
                 password: {},
             },
             async authorize({ payload, request }: any) {
-                const response = await fetchData({
-                    url: request,
-                    method: "POST",
-                    body: JSON.parse(payload),
-                });
-                if (response?.data) return response.data;
-                return null;
-
+                try {
+                    const response = await fetchData({
+                        url: request,
+                        method: "POST",
+                        body: JSON.parse(payload),
+                    });
+                    if (response?.data) return response.data;
+                    
+                    await setAuthError(response?.message || 'Authentication failed');
+                    return null;
+                } catch (error: any) {
+                    const errorMessage = error?.response?.data?.message || error?.message;
+                    await setAuthError(errorMessage);
+                    return null;
+                }
             },
         }),
     ],
